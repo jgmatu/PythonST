@@ -5,20 +5,20 @@ def print_dic (dicc):
     print
     print "****Dicc****"
     for x in dicc.keys():
-        print "Key :" ,  x , "\t" , "Value :" , " ".join(dicc[x])
+        print "Key :" ,  x , "\t" , "Value :" , " | ".join(dicc[x])
     print
 
 
-def inlista (patternList , lista) :
+def inlista (patternList , dicLista) :
     pos = 0
     encontrado = False
-    while (not encontrado and pos < len(patternList)) :
-        if patternList[pos] in lista :
+    while (not encontrado and pos < len(dicLista)) :
+        if dicLista[pos] in  patternList :
             encontrado = True
         else:
             pos = pos + 1
-
     return encontrado , pos
+
 
 def delte_from_List (dicc , lista):
     print "**** Delete from list ****"
@@ -27,10 +27,8 @@ def delte_from_List (dicc , lista):
     for x in dicc.keys():
         result = inlista(lista , dicc[x])
         if result[0] :
-            found = result[1]
-            print dicc[found]
+            print "Element deleted " + str(dicc[x].pop(result[1]))
 
-print "Hello world"
 
 
 dicc_cities = {"Salamanca" : ["Jamón de jagubo" , "Tortilla de Patatas" , "Vino"] , "Valencia" : ["Paella" , "Fidegua" , "Cerveza"],
@@ -45,7 +43,6 @@ dicc_cities["Madrid"] =  ["Patatas Bravas" , "Cocacola" , "Tortilla de Patatas" 
 print_dic(dicc_cities)
 
 
-
 dicc_cities["Málaga"].append("Arroz de los montes")
 dicc_cities["Madrid"].append("Fanta de Naranja")
 print_dic(dicc_cities)
@@ -55,3 +52,5 @@ alcoholicas = ["Vino" , "Sidra" , "Cerveza"]
 
 
 delte_from_List(dicc_cities , alcoholicas)
+
+print_dic(dicc_cities)
