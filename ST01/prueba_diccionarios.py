@@ -9,48 +9,43 @@ def print_dic (dicc):
     print
 
 
-def inlista (patternList , dicLista) :
+def deletedFromLista (dicValueList , alcoholicas) :
     pos = 0
-    encontrado = False
-    while (not encontrado and pos < len(dicLista)) :
-        if dicLista[pos] in  patternList :
-            encontrado = True
+    while pos < len(dicValueList):
+        if dicValueList[pos] in alcoholicas:
+            dicValueList.remove(dicValueList[pos])
+            pos = pos - 1;
         else:
-            pos = pos + 1
-    return encontrado , pos
+            pos = pos + 1;
 
 
-def delte_from_List (dicc , lista):
-    print "**** Delete from list ****"
-    print " ".join(lista)
-    print_dic(dicc)
-    for x in dicc.keys():
-        result = inlista(lista , dicc[x])
-        if result[0] :
-            print "Element deleted " + str(dicc[x].pop(result[1]))
+def deleteAlcoholicas (dicc_cities , alcoholicas):
+    for x in dicc_cities.keys():
+        deletedFromLista(dicc_cities[x] , alcoholicas)
 
 
-
-dicc_cities = {"Salamanca" : ["Jamón de jagubo" , "Tortilla de Patatas" , "Vino"] , "Valencia" : ["Paella" , "Fidegua" , "Cerveza"],
-             "Málaga" : ["Sardinas" , "Boquerones" , "Calamaritos" , "Pulpo Frito" , "Verengenas con miel de caña"],
-             "Pais Vasco" : ["Sidra" , "Fabada" , "Entrecot" , "Atún"]
+dicc_cities = {"Salamanca" : ["Jamón de jagubo" , "Tortilla de Patatas" , "Vino"] ,
+                "Valencia" : ["Paella" , "Fidegua" , "Cerveza"],
+                "Málaga" : ["Sardinas" , "Boquerones" , "Calamaritos" , "Pulpo Frito" , "Verengenas con miel de caña"],
+                "Pais Vasco" : ["Sidra" , "Fabada" , "Entrecot" , "Atún"]
             }
-print_dic(dicc_cities)
 
 
-dicc_cities["A Coruña"] = ["Pulpo Cocido con Patatas y Pimenton" , "Pimientos de padron"]
+dicc_cities["A Coruña"] = ["Pulpo Cocido con Patatas y Pimenton" , "Pimientos de padrón"]
 dicc_cities["Madrid"] =  ["Patatas Bravas" , "Cocacola" , "Tortilla de Patatas" , "Fanta de Limon"]
-print_dic(dicc_cities)
 
 
 dicc_cities["Málaga"].append("Arroz de los montes")
 dicc_cities["Madrid"].append("Fanta de Naranja")
-print_dic(dicc_cities)
+dicc_cities["Madrid"].append("Cerveza")
+dicc_cities["Madrid"].append("Vino")
+
+
 
 alcoholicas = []
 alcoholicas = ["Vino" , "Sidra" , "Cerveza"]
 
 
-delte_from_List(dicc_cities , alcoholicas)
+deleteAlcoholicas(dicc_cities , alcoholicas)
 
 print_dic(dicc_cities)
