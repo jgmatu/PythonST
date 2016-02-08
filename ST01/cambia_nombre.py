@@ -6,24 +6,55 @@ import os
 def IsDirectory (path) :
     return os.path.exists(path)
 
+def changeVolcals (fileName):
+    vocalsAccenture = ["á" , "é" , "í" , "ó" , "ú"]
+    vocals = ["a" , "e" , "i" , "o" , "u"]
+    fileNameChanged = fileName.strip()
+    pos = 0
+    while pos < len(vocals):
+        fileNameChanged = fileNameChanged.replace(vocalsAccenture[pos] , vocals[pos])
+        pos = pos + 1
+
+    return fileNameChanged
+
+
+def changeSpace (fileName):
+    return fileName.replace(" " , "_")
+
+def mayToMin (fileName):
+    return fileName.lower()
+
+
 def changeName (fileName) :
-    mandato="mv " + fileName
-    mandato_troceado=mandato.split()
-    try:
-        subprocess.check_output(mandato_troceado)
-    except subprocess.CalledProcessError:
-        sys.stderr.write("La orden mv ha producido un error\n")
-        raise SystemExit
+    fileNameChanged = fileName.strip()
+    command="mv " + fileName
+
+    fileNameChanged = changeSpace(fileName)
+    fileNameChanged = mayToMin(fileNameChanged)
+    fileNameChanged = changeVolcals(fileNameChanged)
+
+    print fileNameChanged
+
+    #command_parameters = command.split()
+    #try:
+    #    print command_parameters
+    #    print fileNameChanged
+        #subprocess.check_output(command_parameters)
+    #except subprocess.CalledProcessError :
+    #    sys.stderr.write("La orden mv ha producido un error\n")
+    #    raise SystemExit
 
 
 def changeNames (path) :
     if not IsDirectory(path) :
         sys.stderr.write("Not is a valid directory\n")
         raise SystemExit
+
     files = os.listdir(path)
-    for x in range(len(files))
-        changeName(files)
-        
+    for x in range(len(files)):
+        changeName(files[x])
+
+
 sys.argv.remove(sys.argv[0]) # Delete name of program is not a valid path
 if len(sys.argv) == 0 :
     print "Work inside the current directory"
