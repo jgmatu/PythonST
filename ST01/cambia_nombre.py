@@ -1,6 +1,6 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
-import sys
+import sys , subprocess
 import os
 
 def IsDirectory (path) :
@@ -14,7 +14,6 @@ def changeVolcals (fileName):
     while pos < len(vocals):
         fileNameChanged = fileNameChanged.replace(vocalsAccenture[pos] , vocals[pos])
         pos = pos + 1
-
     return fileNameChanged
 
 
@@ -24,25 +23,32 @@ def changeSpace (fileName):
 def mayToMin (fileName):
     return fileName.lower()
 
+def changeSpecials (fileName) :
+    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&"]
+    fileNameChanged = fileName.strip()
+    pos = 0
+    while pos < len(specials) :
+        fileNameChanged = fileNameChanged(specials[pos] , ".")
+        pos = pos + 1
+    return fileNameChanged
 
 def changeName (fileName) :
     fileNameChanged = fileName.strip()
-    command="mv " + fileName
+    command="mv:" + fileName
 
     fileNameChanged = changeSpace(fileName)
     fileNameChanged = mayToMin(fileNameChanged)
     fileNameChanged = changeVolcals(fileNameChanged)
 
-    print fileNameChanged
-
-    #command_parameters = command.split()
-    #try:
-    #    print command_parameters
-    #    print fileNameChanged
-        #subprocess.check_output(command_parameters)
-    #except subprocess.CalledProcessError :
-    #    sys.stderr.write("La orden mv ha producido un error\n")
-    #    raise SystemExit
+    command += ":" + fileNameChanged
+    command_parameters = command.split(":")
+    try:
+        print command_parameters
+        print fileNameChanged
+        subprocess.check_output(command_parameters)
+    except subprocess.CalledProcessError :
+        sys.stderr.write("La orden mv ha producido un error\n")
+        raise SystemExit
 
 
 def changeNames (path) :
