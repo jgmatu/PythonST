@@ -28,7 +28,7 @@ def changeSpecials (fileName) :
     fileNameChanged = fileName.strip()
     pos = 0
     while pos < len(specials) :
-        fileNameChanged = fileNameChanged(specials[pos] , ".")
+        fileNameChanged = fileNameChanged.replace(specials[pos] , ".")
         pos = pos + 1
     return fileNameChanged
 
@@ -39,16 +39,17 @@ def changeName (fileName) :
     fileNameChanged = changeSpace(fileName)
     fileNameChanged = mayToMin(fileNameChanged)
     fileNameChanged = changeVolcals(fileNameChanged)
+    fileNameChanged = changeSpecials(fileNameChanged)
 
     command += ":" + fileNameChanged
     command_parameters = command.split(":")
+
+    print command_parameters
+
     try:
-        print command_parameters
-        print fileNameChanged
-        subprocess.check_output(command_parameters)
+        subprocess.call(command_parameters)
     except subprocess.CalledProcessError :
         sys.stderr.write("La orden mv ha producido un error\n")
-        raise SystemExit
 
 
 def changeNames (path) :
@@ -62,10 +63,10 @@ def changeNames (path) :
 
 
 sys.argv.remove(sys.argv[0]) # Delete name of program is not a valid path
-if len(sys.argv) == 0 :
+if len(sys.argv) == 0:
     print "Work inside the current directory"
     changeNames(".")
-else :
+else:
     print "Work in the list of path directories"
     xRange = range(len(sys.argv))
     for x in xRange :
