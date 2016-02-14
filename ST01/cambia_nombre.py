@@ -1,19 +1,14 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 import sys , subprocess
-import os
-
-def IsDirectory (path) :
-    return os.path.exists(path)
+import shutil ,os
 
 def changeVolcals (fileName):
     vocalsAccenture = ["á" , "é" , "í" , "ó" , "ú"]
     vocals = ["a" , "e" , "i" , "o" , "u"]
     fileNameChanged = fileName.strip()
-    pos = 0
-    while pos < len(vocals):
-        fileNameChanged = fileNameChanged.replace(vocalsAccenture[pos] , vocals[pos])
-        pos = pos + 1
+    for x  in range(len(vocals)):
+        fileNameChanged = fileNameChanged.replace(vocalsAccenture[x] , vocals[x])
     return fileNameChanged
 
 
@@ -24,32 +19,28 @@ def mayToMin (fileName):
     return fileName.lower()
 
 def changeSpecials (fileName) :
-    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&"]
+    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&" , ":" , ")" , "("]
     fileNameChanged = fileName.strip()
-    pos = 0
-    while pos < len(specials) :
-        fileNameChanged = fileNameChanged(specials[pos] , ".")
-        pos = pos + 1
+    for x in range(len(specials)) :
+        fileNameChanged = fileNameChanged.replace(specials[x] , ".")
     return fileNameChanged
 
-def changeName (fileName) :
+def changeName (path , fileName) :
+    """ This function modify the names and moves the files to the new name of file """
     fileNameChanged = fileName.strip()
-    command="mv:" + fileName
+
+    routeS = os.path.join(path , fileNameChanged)
 
     fileNameChanged = changeSpace(fileName)
     fileNameChanged = mayToMin(fileNameChanged)
     fileNameChanged = changeVolcals(fileNameChanged)
+    fileNameChanged = changeSpecials(fileNameChanged)
+    routeD = os.path.join(path , fileNameChanged)
 
-    command += ":" + fileNameChanged
-    command_parameters = command.split(":")
-    try:
-        print command_parameters
-        print fileNameChanged
-        subprocess.check_output(command_parameters)
-    except subprocess.CalledProcessError :
-        sys.stderr.write("La orden mv ha producido un error\n")
-        raise SystemExit
+    shutil.move(routeS , routeD)
 
+def IsDirectory (path) :
+    return os.path.exists(path)
 
 def changeNames (path) :
     if not IsDirectory(path) :
@@ -58,7 +49,7 @@ def changeNames (path) :
 
     files = os.listdir(path)
     for x in range(len(files)):
-        changeName(files[x])
+        changeName(path , files[x])
 
 
 sys.argv.remove(sys.argv[0]) # Delete name of program is not a valid path
@@ -69,5 +60,4 @@ else :
     print "Work in the list of path directories"
     xRange = range(len(sys.argv))
     for x in xRange :
-        print "path : " + sys.argv[x]
         changeNames(sys.argv[x])
