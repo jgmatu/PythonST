@@ -1,19 +1,14 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 import sys , subprocess
-import os
-
-def IsDirectory (path) :
-    return os.path.exists(path)
+import shutil ,os
 
 def changeVolcals (fileName):
     vocalsAccenture = ["á" , "é" , "í" , "ó" , "ú"]
     vocals = ["a" , "e" , "i" , "o" , "u"]
     fileNameChanged = fileName.strip()
-    pos = 0
-    while pos < len(vocals):
-        fileNameChanged = fileNameChanged.replace(vocalsAccenture[pos] , vocals[pos])
-        pos = pos + 1
+    for x  in range(len(vocals)):
+        fileNameChanged = fileNameChanged.replace(vocalsAccenture[x] , vocals[x])
     return fileNameChanged
 
 
@@ -24,42 +19,68 @@ def mayToMin (fileName):
     return fileName.lower()
 
 def changeSpecials (fileName) :
-    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&"]
+    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&" , ":" , ")" , "("]
     fileNameChanged = fileName.strip()
-    pos = 0
-    while pos < len(specials) :
-        fileNameChanged = fileNameChanged.replace(specials[pos] , ".")
-        pos = pos + 1
+    for x in range(len(specials)) :
+        fileNameChanged = fileNameChanged.replace(specials[x] , ".")
     return fileNameChanged
 
 def changeName (fileName) :
+    """ This the names and moves the files to the new name of file """
     fileNameChanged = fileName.strip()
-    command="mv:" + fileName
-
     fileNameChanged = changeSpace(fileName)
     fileNameChanged = mayToMin(fileNameChanged)
     fileNameChanged = changeVolcals(fileNameChanged)
     fileNameChanged = changeSpecials(fileNameChanged)
+    return fileNameChanged
 
-    command += ":" + fileNameChanged
-    command_parameters = command.split(":")
+def IsDirectory (path) :
+    return os.path.exists(path)
 
-    print command_parameters
+def saveNames (path) :
+    names = {}
+    files = os.listdir(path)   # Files in directory
+    for x in range(len(files)):
+        fileD = changeName(files[x])
+        if names.has_key(fileD):
+            names[fileD].append(files[x])
+        else :
+            names[fileD] = [files[x]]
+    return names
 
-    try:
-        subprocess.call(command_parameters)
-    except subprocess.CalledProcessError :
-        sys.stderr.write("La orden mv ha producido un error\n")
+def putExt (names , fileDest , files) :
+    pos = 0
+    fileExt = fileDest.strip()
+    while pos < len(files):
+        fileExt = fileDest
+        if (pos > 9) :
+            ext = "0" + str(pos)
+        elif (pos > 99):
+            ext = str(pos)
+        else :
+            ext = "0"*2 + str(pos + 1)
+        fileExt += ext
+        names[fileDest].remove(files[pos - 1])
+        names[fileDest].append(fileExt)
+        pos = pos + 1
 
+def extensions (names) :
+    keys = names.keys()
+    for x in keys :
+        if len(names[x]) != 1 :
+            putExt(names , x , names[x])
 
 def changeNames (path) :
+
     if not IsDirectory(path) :
         sys.stderr.write("Not is a valid directory\n")
         raise SystemExit
+    names = {}
+    names = saveNames(path)
+    print names
+    extensions(names)
+    print names
 
-    files = os.listdir(path)
-    for x in range(len(files)):
-        changeName(files[x])
 
 
 sys.argv.remove(sys.argv[0]) # Delete name of program is not a valid path
@@ -70,5 +91,4 @@ else:
     print "Work in the list of path directories"
     xRange = range(len(sys.argv))
     for x in xRange :
-        print "path : " + sys.argv[x]
         changeNames(sys.argv[x])
