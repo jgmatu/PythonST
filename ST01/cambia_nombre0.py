@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import sys , subprocess
 import shutil ,os
-from optparse import OptionParser
 
 def changeVolcals (fileName):
     vocalsAccenture = ["á" , "é" , "í" , "ó" , "ú"]
@@ -77,12 +76,12 @@ def colisions (names) :
             hay que ponerles la extension"""
             putExt(names , x , names[x])
 
-def changeNames (path , parser) :
+def changeNames (path) :
     namesSource = {}
     namesDest = {}
 
     if not IsDirectory(path) :
-        parser.error("Not is a valid directory \n")
+        sys.stderr.write("Not is a valid directory\n")
         raise SystemExit
     names = saveNames(path)
     colisions(names)
@@ -109,27 +108,12 @@ def changeNames (path , parser) :
             shutil.move(source , dest)
 
 
-
-def main() :
-    usage = "Use: %prog [OPTION]... DIRECTORY... "
-    parser = OptionParser(usage)
-    parser.add_option("-r" , "--recursive" , action="store_true" , dest="recursive" , help="Uso recursivo")
-    parser.add_option("-s" , "--space" , action="store_true" , dest="space" , help="Replace space to _")
-    parser.add_option("-c" , "--case" , action="store_true" , dest="case" , help="Replace may to min")
-    parser.add_option("-n" , "--enne" , action="store_true" , dest="enne" , help="Replace enne to nh")
-    parser.add_option("-t" , "--accent" , action="store_true" , dest="accent" , help= "Replace vocals accenture")
-    parser.add_option("-w" , "--weird" , action="store_true" , dest="weird" , help= "Replace Specials caracters")
-
-    (options , arguments) = parser.parse_args()
-
-    if len(arguments) == 0:
-        print "Work inside the current directory"
-        changeNames("." , parser)
-    else:
-        print "Work in the list of path directories"
-        xRange = range(len(arguments))
-        for x in xRange :
-            changeNames(arguments[x] , parser)
-
-if __name__ == "__main__" :
-    main()
+sys.argv.remove(sys.argv[0]) # Delete name of program is not a valid path
+if len(sys.argv) == 0:
+    print "Work inside the current directory"
+    changeNames(".")
+else:
+    print "Work in the list of path directories"
+    xRange = range(len(sys.argv))
+    for x in xRange :
+        changeNames(sys.argv[x])
