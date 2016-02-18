@@ -3,6 +3,8 @@
 import types
 import sys
 
+from optparse import OptionParser
+
 def isNumber (element):
     return type(element) == types.IntType or type(element) == types.FloatType or \
                 type(element) == types.LongType
@@ -16,7 +18,6 @@ def sum_elemtens (list_elements):
         else:
             sys.stderr.write("Not is a number element exception SystemExit called\n")
             raise SystemExit
-
     return total
 
 def mySort (a , b):
@@ -32,24 +33,47 @@ def mySort (a , b):
         else:
             return 0
 
+def isLine (line) :
+    print line
+    return True
 
-lista1 = [[1 , 3] , [5] , [0] , [2 , 2 , 2]]
+def readFile (fileName) :
+    try :
+        fich = open(fileName , "r")
+    except :
+        print "Error open file : " + fileName + " try again"
+        raise SystemExit
+    list_lines = fich.readlines()
+    listNumb = []
+    for x in range(len(list_lines)) :
+        if isLine(list_lines[x]) :
+            print "Tested line ok"
+        else :
+            print "Tested line fail"
+        listNumb.append(list_lines[x].split(','))
 
-lista1.sort(mySort)
+def main () :
+    usage = "Use %prog [Opciones] [INPUT] [OUPUT] DEFAULT stdin stout"
+    parser = OptionParser(usage)
+    parser.add_option("-i" , "--input" , action="store_true" , dest="input", help="Select a file to input")
+    parser.add_option("-o" , "--output" , action="store_true" , dest="output", help="Select a file to output")
 
-print lista1
+    (options , arguments) =  parser.parse_args()
 
-lista2 = [[1 , 3] , [2 , 1 , 1] , [1 , 1 , 1 , 1] , [4] , [5 , 3] , [4 , 3] , [0]]
+    if len(arguments) == 0 :
+        #Read stdin write stdout
+        print "Read stdin write stdout"
+    elif  len(arguments) == 1 and options.input :
+        #Read from file and write in stdout
+        print "Read from file and write in stdout"
+    elif len(arguments) == 1 and options.output :
+        #Read from stdin write in file.
+        print "Read from stdin and write in file"
+    else :
+        #Read from file write in file
+        print "read from file  and write in file"
 
-lista2.sort(mySort)
+    readFile("prueba.txt")
 
-print lista2
-
-lista3 = []
-if len(lista3) != 0 :
-    lista3.sort(mySort)
-else :
-    sys.stderr.write("Not is a list allowed exception SystemExit called\n")
-    raise SystemExit
-
-print lista3
+if __name__ == "__main__" :
+    main()
