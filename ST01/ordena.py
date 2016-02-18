@@ -3,7 +3,7 @@
 import types
 import sys
 
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 def isNumber (element):
     return type(element) == types.IntType or type(element) == types.FloatType or \
@@ -33,47 +33,108 @@ def mySort (a , b):
         else:
             return 0
 
-def isLine (line) :
-    print line
-    return True
+def getLine (line , numline) :
+    result = []
+
+    if len(line[-1]) == 0 or line[-1].find(' ') != -1 :
+        print "There is a not valid line of file there is a cuotte :" + str(numline)
+        raise SystemExit
+
+    for x in range(len(line)) :
+        try :
+            result.append(int(line[x]))
+        except :
+            print "Not is a number : " + line[x] + " numline : " + str(numline)
+            raise SystemExit
+    return result
+
+def format (line) :
+    listStr = []
+    line = line.strip()
+    line.split(',')
+
 
 def readFile (fileName) :
     try :
         fich = open(fileName , "r")
     except :
-        print "Error open file : " + fileName + " try again"
+        print "Error open file : " + fileName + "\ttry again"
         raise SystemExit
     list_lines = fich.readlines()
+
     listNumb = []
+    listStr =  []
+    numline = 1
     for x in range(len(list_lines)) :
-        if isLine(list_lines[x]) :
-            print "Tested line ok"
-        else :
-            print "Tested line fail"
-        listNumb.append(list_lines[x].split(','))
+        format(list_lines[x])
+        listStr.append(list_lines[x])
+        listNumb.append(getLine(listStr , numline))
+        numline = numline + 1
+    fich.close()
+    return listNumb
+
+
+def writeFile (fileName , listNumb) :
+
+    try :
+        fich = open(fileName , "w")
+    except :
+        print "Error open file : " + fileName + "\t try again"
+        raise SystemExit
+
+    # Sort and cast numbers to write in my file */
+    listNumb.sort(mySort)
+    for x in range(len(listNumb)) :
+        for y in range(len (listNumb[x])) :
+            listNumb[x][y] = str(listNumb[x][y])
+
+    for x in range(len(listNumb)) :
+        fich.write(" ".join(listNumb[x]) + '\n')
+    fich.close()
+
+
+def stdin () :
+    lines = []
+    for line in sys.stdin.readlines():
+        lines.append(line)
+        sys.stdout.write(line)
+        lines = format(lines)
+    print lines
+
 
 def main () :
     usage = "Use %prog [Opciones] [INPUT] [OUPUT] DEFAULT stdin stout"
-    parser = OptionParser(usage)
-    parser.add_option("-i" , "--input" , action="store_true" , dest="input", help="Select a file to input")
-    parser.add_option("-o" , "--output" , action="store_true" , dest="output", help="Select a file to output")
+    parser = ArgumentParser(usage)
+    parser.add_argument("-i" , "--input" , action="store" , dest="input", type=str , help="Select a file to input")
+    parser.add_argument("-o" , "--output" , action="store" , dest="output", type=str , help="Select a file to output")
 
-    (options , arguments) =  parser.parse_args()
+    arguments = parser.parse_args()
 
-    if len(arguments) == 0 :
+
+    listNumb = []
+    if arguments.input == None and arguments.output == None :
+
         #Read stdin write stdout
         print "Read stdin write stdout"
-    elif  len(arguments) == 1 and options.input :
-        #Read from file and write in stdout
-        print "Read from file and write in stdout"
-    elif len(arguments) == 1 and options.output :
-        #Read from stdin write in file.
-        print "Read from stdin and write in file"
-    else :
-        #Read from file write in file
-        print "read from file  and write in file"
 
-    readFile("prueba.txt")
+    elif  arguments.input != None and arguments.output == None :
+
+        #Read from file and write in stdout
+        print "Read from file : " + arguments.input + "\twrite in stdout"
+
+    elif arguments.input == None and arguments.output != None :
+
+        #Read from stdin write in file.
+        print "Read from stdin and write in file : " + arguments.output
+
+    else :
+
+        #Read from file write in file
+        print "Read from file : " + arguments.input +   "\tand write in file : " + arguments.output
+
+    #stdin()
+    listNumb = readFile("prueba.txt")
+    writeFile("write.txt"  , listNumb)
 
 if __name__ == "__main__" :
     main()

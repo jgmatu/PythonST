@@ -20,29 +20,45 @@ def mayToMin (fileName):
     return fileName.lower()
 
 def changeSpecials (fileName) :
-    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&" , ":" , ")" , "("]
+    specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&" , ":" , ")" , "(" , "-"]
     fileNameChanged = fileName.strip()
     for x in range(len(specials)) :
         fileNameChanged = fileNameChanged.replace(specials[x] , ".")
     return fileNameChanged
 
-def changeName (fileName) :
+
+def thereOpt(options) :
+    return options.space or options.case or options.accent or options.weird
+
+def changeName (fileName , options) :
     """ This the names and moves the files to the new name of file """
     fileNameChanged = fileName.strip()
-    fileNameChanged = changeSpace(fileName)
-    fileNameChanged = mayToMin(fileNameChanged)
-    fileNameChanged = changeVolcals(fileNameChanged)
-    fileNameChanged = changeSpecials(fileNameChanged)
+
+    if thereOpt(options) :
+        if options.space :
+            fileNameChanged = changeSpace(fileName)
+        if options.case :
+            fileNameChanged = mayToMin(fileNameChanged)
+        if options.accent :
+            fileNameChanged = changeVolcals(fileNameChanged)
+        if options.weird :
+            fileNameChanged = changeSpecials(fileNameChanged)
+    else :
+        fileNameChanged = changeSpace(fileName)
+        fileNameChanged = mayToMin(fileNameChanged)
+        fileNameChanged = changeVolcals(fileNameChanged)
+        fileNameChanged = changeSpecials(fileNameChanged)
+
     return fileNameChanged
 
 def IsDirectory (path) :
     return os.path.exists(path)
 
-def saveNames (path) :
+def saveNames (path , options) :
     names = {}
     files = os.listdir(path)   # Files in directory
     for x in range(len(files)):
-        fileD = changeName(files[x])
+        fileD = changeName(files[x] , options)
         if names.has_key(fileD):
             names[fileD].append(files[x])
         else :
@@ -77,14 +93,14 @@ def colisions (names) :
             hay que ponerles la extension"""
             putExt(names , x , names[x])
 
-def changeNames (path , parser) :
+def changeNames (path , parser , options) :
     namesSource = {}
     namesDest = {}
 
     if not IsDirectory(path) :
         parser.error("Not is a valid directory \n")
         raise SystemExit
-    names = saveNames(path)
+    names = saveNames(path , options)
     colisions(names)
 
     """ Inicialize the number of colisions changed..."""
@@ -95,20 +111,40 @@ def changeNames (path , parser) :
     """ Move the files to its new name"""
     files = os.listdir(path)
     for x in range(len(files)):
-        if len (names[changeName(files[x])]) != 2 :
+        fileName = changeName(files[x] , options)
+        if len (names[fileName]) != 2 :
             """Change names of files with colsisions with her extension"""
-            num = names[changeName(files[x])].pop(len(names[changeName(files[x])]) - 1)
+            num = names[fileName].pop(len(names[fileName]) - 1)
             source =  os.path.join(path , files[x])
-            dest =  os.path.join(path , names[changeName(files[x])][num])
+            dest =  os.path.join(path , names[fileName][num])
             shutil.move(source , dest)
-            names[changeName(files[x])].append(num + 1)
+            names[fileName].append(num + 1)
         else :
             """Default change name..."""
             source =  os.path.join(path , files[x])
-            dest = os.path.join(path , changeName(files[x]))
+            dest = os.path.join(path , fileName)
             shutil.move(source , dest)
 
 
+
+def recursiving (path , parser , options) :
+    for x in os.walk(path) :
+        changeNames(x[0] , parser , options)
+
+def workInDirectories (arguments , parser , options) :
+    """Work in the list of path directories"""
+    print "Work in the list of path directories"
+    xRange = range(len(arguments))
+    for x in xRange :
+        if options.recursive :
+            recursiving(arguments[x] , parser , options)
+        else :
+            changeNames(arguments[x] , parser , options)
+
+
+def workinActualDir (path , parser , options) :
+    print "Work inside the current directory"
+    changeNames(path , parser , options)
 
 def main() :
     usage = "Use: %prog [OPTION]... DIRECTORY... "
@@ -119,17 +155,12 @@ def main() :
     parser.add_option("-n" , "--enne" , action="store_true" , dest="enne" , help="Replace enne to nh")
     parser.add_option("-t" , "--accent" , action="store_true" , dest="accent" , help= "Replace vocals accenture")
     parser.add_option("-w" , "--weird" , action="store_true" , dest="weird" , help= "Replace Specials caracters")
-
     (options , arguments) = parser.parse_args()
 
     if len(arguments) == 0:
-        print "Work inside the current directory"
-        changeNames("." , parser)
+        workinActualDir("." , parser , options)
     else:
-        print "Work in the list of path directories"
-        xRange = range(len(arguments))
-        for x in xRange :
-            changeNames(arguments[x] , parser)
+        workInDirectories(arguments , parser , options)
 
 if __name__ == "__main__" :
     main()
