@@ -48,10 +48,14 @@ def getLine (line , numline) :
             raise SystemExit
     return result
 
-def format (line) :
-    listStr = []
-    line = line.strip()
-    line.split(',')
+def formatF (list_lines) :
+    listformatlines = []
+    line = ""
+    print list_lines
+    for x in range(len(list_lines)) :
+        list_lines[x].strip()
+    print list_lines
+    return listformatlines
 
 
 def readFile (fileName) :
@@ -65,9 +69,9 @@ def readFile (fileName) :
     listNumb = []
     listStr =  []
     numline = 1
-    for x in range(len(list_lines)) :
-        format(list_lines[x])
-        listStr.append(list_lines[x])
+
+    listStr = formatF(list_lines)
+    for x in range(len(listStr)) :
         listNumb.append(getLine(listStr , numline))
         numline = numline + 1
     fich.close()
@@ -95,10 +99,10 @@ def writeFile (fileName , listNumb) :
 
 def stdin () :
     lines = []
+    lines = formatF(lines)
     for line in sys.stdin.readlines():
         lines.append(line)
         sys.stdout.write(line)
-        lines = format(lines)
     print lines
 
 
