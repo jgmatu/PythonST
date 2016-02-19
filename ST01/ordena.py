@@ -37,7 +37,7 @@ def getLine (line , numline) :
     result = []
 
     if len(line[-1]) == 0 or line[-1].find(' ') != -1 :
-        print "There is a not valid line of file there is a cuotte :" + str(numline)
+        print "There is a not valid file line :" + str(numline)
         raise SystemExit
 
     for x in range(len(line)) :
@@ -49,44 +49,51 @@ def getLine (line , numline) :
     return result
 
 def formatF (list_lines) :
-    listformatlines = []
-    line = ""
-    print list_lines
-    for x in range(len(list_lines)) :
-        list_lines[x].strip()
-    print list_lines
-    return listformatlines
+    """Function format file convection to convert in number later..."""
+    # Drop extremes spaces and /n and data struct convert
+    format1 = []
+    format2 = []
+    for x in range(len(list_lines)):
+        format1.append(list_lines[x].strip())
+        format2.append(format1[x].split(','))
+
+    # Drop all white space between string separe by cuotes
+    format3 = []
+    for x in range(len(format2)) :
+        formataux = []
+        for y in range(len(format2[x])):
+            formataux.append(format2[x][y].strip())
+        format3.append(formataux)
+    return format3
 
 
-def readFile (fileName) :
+def openFile (fileName , mode) :
     try :
-        fich = open(fileName , "r")
+        fich = open(fileName , mode)
+        return fich
     except :
-        print "Error open file : " + fileName + "\ttry again"
+        print "Error open file to write: " + fileName + "\ttry again"
         raise SystemExit
-    list_lines = fich.readlines()
 
+
+def converNums (linesfomat) :
     listNumb = []
-    listStr =  []
     numline = 1
-
-    listStr = formatF(list_lines)
-    for x in range(len(listStr)) :
-        listNumb.append(getLine(listStr , numline))
+    for x in range(len(linesfomat)) :
+        listNumb.append(getLine(linesfomat[x] , numline))
         numline = numline + 1
-    fich.close()
     return listNumb
 
 
-def writeFile (fileName , listNumb) :
 
-    try :
-        fich = open(fileName , "w")
-    except :
-        print "Error open file : " + fileName + "\t try again"
-        raise SystemExit
+def readFile (fich) :
+    list_lines = fich.readlines()
+    listformatlines = formatF(list_lines)
+    return converNums(listformatlines)
 
-    # Sort and cast numbers to write in my file */
+def writeFile (fich , listNumb) :
+
+    # Sort and cast numbers to write in my file
     listNumb.sort(mySort)
     for x in range(len(listNumb)) :
         for y in range(len (listNumb[x])) :
@@ -94,16 +101,15 @@ def writeFile (fileName , listNumb) :
 
     for x in range(len(listNumb)) :
         fich.write(" ".join(listNumb[x]) + '\n')
-    fich.close()
 
 
 def stdin () :
     lines = []
-    lines = formatF(lines)
     for line in sys.stdin.readlines():
         lines.append(line)
-        sys.stdout.write(line)
-    print lines
+    lines = formatF(lines)
+    lines = converNums(lines)
+    return lines
 
 
 def main () :
@@ -136,9 +142,15 @@ def main () :
         #Read from file write in file
         print "Read from file : " + arguments.input +   "\tand write in file : " + arguments.output
 
-    #stdin()
-    listNumb = readFile("prueba.txt")
-    writeFile("write.txt"  , listNumb)
+    listNumb = stdin()
+
+    fich = openFile("prueba.txt" , "r")
+    listNumb = readFile(fich)
+    fich.close()
+
+    fich = openFile("write.txt" , "w")
+    writeFile(fich , listNumb)
+    fich.close()
 
 if __name__ == "__main__" :
     main()
