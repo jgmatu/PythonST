@@ -1,0 +1,29 @@
+Francisco Javier Gutierrez-Maturana Sanchez javsan
+
+  $ touch ~/.bashrc
+  $ echo "PATH=$PATH:." >> ~/.bashrc
+  $ echo "PATH=$PATH:~/bin" >> ~/.bashrc
+
+  $ wget http://gsyc.es/~mortuno/docs/xmlpp
+  $ mv xmlpp ~/bin/
+
+  $ wget http://gsyc.es/~mortuno/docs/xmlcheck
+  $ mv xmlcheck ~/bin
+
+
+  $ xmlpp coches.xml
+  <?xml version="1.1" encoding="UTF-8"?>
+  <coches>
+      <coche1 matricula="0391BGP" marca="NISSAN" modelo="ALMEDA"/>
+      <coche2 matricula="9394CCJ" marca="CITROEH" modelo="PICASSO"/>
+  </coches>
+
+
+ $ xmlpp coches.xml > cochesaux.xml
+ $ mv cochesaux.xml coches.xml
+ $ cat coches.xml
+ <?xml version="1.1" encoding="UTF-8"?>
+ <coches>
+     <coche1 matricula="0391BGP" marca="NISSAN" modelo="ALMEDA"/>
+     <coche2 matricula="9394CCJ" marca="CITROEH" modelo="PICASSO"/>
+ </coches>
