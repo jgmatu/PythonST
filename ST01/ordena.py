@@ -75,12 +75,13 @@ def formatFile (list_lines) :
     return format3
 
 
+
 def openFile (fileName , mode) :
     try :
         fich = open(fileName , mode)
         return fich
     except :
-        print "Error open file " + fileName + " mode : " + mode.upper()
+        sys.stderr.write("Error open file " + fileName + " mode : " + mode.upper())
         raise SystemExit
 
 
@@ -135,7 +136,7 @@ def stdout (listNumb) :
 
 
 def main () :
-    
+
     usage = "Use %prog [Options] [INPUT] [OUPUT] DEFAULT stdin stout"
     parser = ArgumentParser(usage)
     parser.add_argument("-i" , "--input" , action="store" , dest="input", type=str , help="Select a file to input")
