@@ -1,51 +1,51 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<discoteca01>
-    <disco1 titulo="Cosas que pasan que no pasan y que deberían pasar"  autor="CHOJIN" fecha="01/03/2009">
-        <cancion1  name="Arriba" colaboracion="Locus" duracion="2.28"/>
-        <cancion2  name="Por la mañana" colaboracion="" duracion="0.34"/>
-        <cancion3  name="Es loco" colaboracion="" duracion="4.03"/>
-        <cancion4  name="Llamada a Mario" colaboracion="" duracion="0.47"/>
-        <cancion5  name="Mi odisea" colaboracion="" duracion="3.16"/>
-        <cancion6  name="Llegada de jairo" colaboracion="" duracion="0.25"/>
-        <cancion7  name="Cosas que pasan" colaboracion="" duracion="1.49"/>
-        <cancion8  name="El camino a la discografica" colaboracion="" duracion="0.32"/>
-        <cancion9  name="Uh" colaboracion="" duracion="3.38"/>
-        <cancion10 name="Pequeñas Cosas" colaboracion="Maika Sitté" duracion="3.56"/>
-        <cancion11 name="La llegada a la discografica" colaboracion="" duracion="0.29"/>
-        <cancion12 name="No me importa lo que me cuenten" colaboracion="" duracion="3.53"/>
-        <cancion13 name="La negociacion" colaboracion="" duracion="0.35"/>
-        <cancion14 name="Jo Colega / Mala suerte" colaboracion="Red House" duracion="4.54"/>
-        <cancion15 name="La pervesion del lenguage" colaboracion="El Gran Wyoming" duracion="3.19"/>
-        <cancion16 name="Rie cuando puedas llora cuando lo necesites (Remix)" colaboracion="Luis Eduardo Aute" duracion="3.44"/>
-        <cancion17 name="La decepcion" colaboracion="" duracion="1.07"/>
-        <cancion18 name="Un paso atrás" colaboracion="" duracion="3.09"/>
-        <cancion19 name="Cosas que no pasan" colaboracion="" duracion="1.26"/>
-        <cancion20 name="La decisión" colaboracion="" duracion="0.22"/>
-        <cancion21 name="Libre" colaboracion="Donpa y la Orquesta de cámara clave 1" duracion="5.57"/>
-        <cancion22 name="Los Conciertos" colaboracion="" duracion="0.53"/>
-        <cancion23 name="N.E.G.R.O." colaboracion="" duracion="3.14"/>
-        <cancion24 name="Superhéroe" colaboracion="" duracion="3.16"/>
-        <cancion25 name="Por ahí, por allá" colaboracion="" duracion="0.12"/>
-        <cancion26 name="Cosas que deberían pasar" colaboracion="" duracion="1.31"/>
-        <cancion27 name="Habilidades" colaboracion="" duracion="3.40"/>
-        <cancion28 name="El reencuentro" colaboracion="" duracion="0.47"/>
-        <cancion29 name="Sientensé y disfruten" colaboracion="Astrid Jones" duracion="4.31"/>
-        <cancion30 name="P.D" colaboracion="" duracion="4.06"/>
-    </disco1>
-    <disco2 titulo="Cerebirs mortis" autor="Duo Kie" fecha="03/04/2011">
-        <cancion1  name="Pon una cifra" colaboracion="" duracion="3.42"/>
-        <cancion2  name="Quien se apunta" colaboracion="" duracion="4.31"/>
-        <cancion3  name="Kies in the games" colaboracion="Kool G Rap" duracion="2.41"/>
-        <cancion4  name="Un, dos" colaboracion="" duracion="3.13"/>
-        <cancion5  name="Pistolas de agua" colaboracion="" duracion="3.55"/>
-        <cancion6  name="El último hombre furioso" colaboracion="" duracion="3.42"/>
-        <cancion7  name="Voy a por ti" colaboracion="Kutxi Romero" duracion="4.31"/>
-        <cancion8  name="Ouch" colaboracion="" duracion="3.13"/>
-        <cancion9  name="Rap y chimpancés" colaboracion="" duracion="3.13"/>
-        <cancion10 name="Boom!" colaboracion="" duracion="4.13"/>
-        <cancion11 name="Si nos oyen gritar" colaboracion="" duracion="3.10"/>
-        <cancion12 name="Rapzilla" colaboraciones="Capaz y Sho-Hai" duracion="4.21"/>
-        <cancion13 name="La vida a ras de suelo" colaboraciones="" duracion="3.11"/>
-        <cancion14 name="Mientras sigamos vivos" colaboraciones="" duracion="4.31"/>
-    </disco2>
-</discoteca01>
+<discoteca>
+    <disco titulo="Cosas que pasan que no pasan y que deberían pasar"  autor="CHOJIN" fecha="01/03/2009">
+        <cancion name="Arriba" colaboracion="Locus" duracion="2.28"/>
+        <cancion name="Por la mañana" colaboracion="" duracion="0.34"/>
+        <cancion name="Es loco" colaboracion="" duracion="4.03"/>
+        <cancion name="Llamada a Mario" colaboracion="" duracion="0.47"/>
+        <cancion name="Mi odisea" colaboracion="" duracion="3.16"/>
+        <cancion name="Llegada de jairo" colaboracion="" duracion="0.25"/>
+        <cancion name="Cosas que pasan" colaboracion="" duracion="1.49"/>
+        <cancion name="El camino a la discografica" colaboracion="" duracion="0.32"/>
+        <cancion name="Uh" colaboracion="" duracion="3.38"/>
+        <cancion name="Pequeñas Cosas" colaboracion="Maika Sitté" duracion="3.56"/>
+        <cancion name="La llegada a la discografica" colaboracion="" duracion="0.29"/>
+        <cancion name="No me importa lo que me cuenten" colaboracion="" duracion="3.53"/>
+        <cancion name="La negociacion" colaboracion="" duracion="0.35"/>
+        <cancion name="Jo Colega / Mala suerte" colaboracion="Red House" duracion="4.54"/>
+        <cancion name="La pervesion del lenguage" colaboracion="El Gran Wyoming" duracion="3.19"/>
+        <cancion name="Rie cuando puedas llora cuando lo necesites (Remix)" colaboracion="Luis Eduardo Aute" duracion="3.44"/>
+        <cancion name="La decepcion" colaboracion="" duracion="1.07"/>
+        <cancion name="Un paso atrás" colaboracion="" duracion="3.09"/>
+        <cancion name="Cosas que no pasan" colaboracion="" duracion="1.26"/>
+        <cancion name="La decisión" colaboracion="" duracion="0.22"/>
+        <cancion name="Libre" colaboracion="Donpa y la Orquesta de cámara clave 1" duracion="5.57"/>
+        <cancion name="Los Conciertos" colaboracion="" duracion="0.53"/>
+        <cancion name="N.E.G.R.O." colaboracion="" duracion="3.14"/>
+        <cancion name="Superhéroe" colaboracion="" duracion="3.16"/>
+        <cancion name="Por ahí, por allá" colaboracion="" duracion="0.12"/>
+        <cancion name="Cosas que deberían pasar" colaboracion="" duracion="1.31"/>
+        <cancion name="Habilidades" colaboracion="" duracion="3.40"/>
+        <cancion name="El reencuentro" colaboracion="" duracion="0.47"/>
+        <cancion name="Sientensé y disfruten" colaboracion="Astrid Jones" duracion="4.31"/>
+        <cancion name="P.D" colaboracion="" duracion="4.06"/>
+    </disco>
+    <disco titulo="Cerebirs mortis" autor="Duo Kie" fecha="03/04/2011">
+        <cancion name="Pon una cifra" colaboracion="" duracion="3.42"/>
+        <cancion name="Quien se apunta" colaboracion="" duracion="4.31"/>
+        <cancion name="Kies in the games" colaboracion="Kool G Rap" duracion="2.41"/>
+        <cancion name="Un, dos" colaboracion="" duracion="3.13"/>
+        <cancion name="Pistolas de agua" colaboracion="" duracion="3.55"/>
+        <cancion name="El último hombre furioso" colaboracion="" duracion="3.42"/>
+        <cancion name="Voy a por ti" colaboracion="Kutxi Romero" duracion="4.31"/>
+        <cancion name="Ouch" colaboracion="" duracion="3.13"/>
+        <cancion name="Rap y chimpancés" colaboracion="" duracion="3.13"/>
+        <cancion name="Boom!" colaboracion="" duracion="4.13"/>
+        <cancion name="Si nos oyen gritar" colaboracion="" duracion="3.10"/>
+        <cancion name="Rapzilla" colaboraciones="Capaz y Sho-Hai" duracion="4.21"/>
+        <cancion name="La vida a ras de suelo" colaboraciones="" duracion="3.11"/>
+        <cancion name="Mientras sigamos vivos" colaboraciones="" duracion="4.31"/>
+    </disco>
+</discoteca>
