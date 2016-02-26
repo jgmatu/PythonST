@@ -1,0 +1,43 @@
+#!/usr/bin/python -tt
+# -*- coding: utf-8 -*-
+
+import sys , os
+import argparse
+import xmlpp
+
+
+
+def openFile (fileName , mode) :
+    try :
+        fich = open(fileName , mode)
+        return fich
+    except :
+        sys.stderr.write("Error open file " + fileName + " mode : " + mode.upper())
+        raise SystemExit
+
+
+
+def cntrlArgs (arguments) :
+    print
+    if arguments.modify and arguments.output != None :
+        sys.stderr.write("Error -m and OUTPUT file are incompatibles" + '\n')
+        raise SystemExit
+
+    if not arguments.modify and arguments.output == None:
+        xmlpp.pprint(arguments.fileIn , sys.stdout , 8 , 80)
+
+
+def main () :
+
+    usage = "%prog [OPCIONES] input output you have to pass input file like argument"
+    parser = argparse.ArgumentParser(usage)
+
+    parser.add_argument("fileIn"  ,  help = "xml file to format")
+    parser.add_argument("-o" , "--output" , action="store" , dest="output" , help = "xml output file format")
+    parser.add_argument("-m" , "--modify" , action="store_true", dest="modify" , help="modify this file in format XML")
+
+    arguments = parser.parse_args()
+    cntrlArgs(arguments)
+
+if __name__ == "__main__" :
+    main()
