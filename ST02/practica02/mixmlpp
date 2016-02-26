@@ -21,7 +21,7 @@ def cntrlArgs (arguments) :
     dataFile = ""
 
     if arguments.modify and arguments.output != None :
-        sys.stderr.write("Error -m and OUTPUT file are incompatibles" + '\n')
+        sys.stderr.write("Error -m and OUTPUT option are incompatibles" + '\n')
         raise SystemExit
 
     fileR = openFile(arguments.fileIn , "r")
