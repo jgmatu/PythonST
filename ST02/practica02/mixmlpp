@@ -1,11 +1,11 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-import sys , os
+import sys , os , shutil
 import argparse
 import xmlpp
 
-
+TAB = 8
 
 def openFile (fileName , mode) :
     try :
@@ -18,13 +18,25 @@ def openFile (fileName , mode) :
 
 
 def cntrlArgs (arguments) :
-    print
+    dataFile = ""
+
     if arguments.modify and arguments.output != None :
         sys.stderr.write("Error -m and OUTPUT file are incompatibles" + '\n')
         raise SystemExit
 
+    fileR = openFile(arguments.fileIn , "r")
+    dataFile = fileR.read()
     if not arguments.modify and arguments.output == None:
-        xmlpp.pprint(arguments.fileIn , sys.stdout , 8 , 80)
+        xmlpp.pprint(dataFile , sys.stdout , TAB , 80)
+
+    if not arguments.modify and arguments.output != None:
+        fileW = openFile(arguments.output , "w")
+        xmlpp.pprint(dataFile , fileW , TAB , 80)
+
+    if arguments.modify and arguments.output == None:
+        fileW = openFile("/tmp/a" , "w")
+        xmlpp.pprint(dataFile , fileW , TAB , 80)
+        shutil.move("/tmp/a" , arguments.fileIn)
 
 
 def main () :
