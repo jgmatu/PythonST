@@ -18,6 +18,11 @@ def changeSpace (fileName):
 def mayToMin (fileName):
     return fileName.lower()
 
+def changeEnne (fileName) :
+    fileNameChanged = fileName.strip()
+    fileNameChanged = fileNameChanged.replace("ñ" , "ny")
+    return fileNameChanged
+
 def changeSpecials (fileName) :
     specials = ["|" , "@" , "#" , "~" ,"!" , "�" , "$" , "%" , "&" , ":" , ")" , "("]
     fileNameChanged = fileName.strip()
@@ -32,6 +37,7 @@ def changeName (fileName) :
     fileNameChanged = mayToMin(fileNameChanged)
     fileNameChanged = changeVolcals(fileNameChanged)
     fileNameChanged = changeSpecials(fileNameChanged)
+    fileNameChanged = changeEnne(fileNameChanged)
     return fileNameChanged
 
 def IsDirectory (path) :

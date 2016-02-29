@@ -13,6 +13,12 @@ def changeVolcals (fileName):
     return fileNameChanged
 
 
+def changeEnne (fileName) :
+    fileNameChanged = fileName.strip()
+    fileNameChanged = fileNameChanged.replace("ñ" , "nn")
+    return fileNameChanged
+
+
 def changeSpace (fileName):
     return fileName.replace(" " , "_")
 
@@ -43,11 +49,15 @@ def changeName (fileName , options) :
             fileNameChanged = changeVolcals(fileNameChanged)
         if options.weird :
             fileNameChanged = changeSpecials(fileNameChanged)
+        if options.enne :
+            fileNameChanged = changeEnne(fileNameChanged)
+            
     else :
         fileNameChanged = changeSpace(fileName)
         fileNameChanged = mayToMin(fileNameChanged)
         fileNameChanged = changeVolcals(fileNameChanged)
         fileNameChanged = changeSpecials(fileNameChanged)
+        fileNameChanged = changeEnne(fileNameChanged)
 
     return fileNameChanged
 
