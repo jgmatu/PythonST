@@ -7,6 +7,7 @@ from optparse import OptionParser
 def changeVolcals (fileName):
     vocalsAccenture = ["á" , "é" , "í" , "ó" , "ú"]
     vocals = ["a" , "e" , "i" , "o" , "u"]
+    
     fileNameChanged = fileName.strip()
     for x  in range(len(vocals)):
         fileNameChanged = fileNameChanged.replace(vocalsAccenture[x] , vocals[x])
@@ -51,7 +52,7 @@ def changeName (fileName , options) :
             fileNameChanged = changeSpecials(fileNameChanged)
         if options.enne :
             fileNameChanged = changeEnne(fileNameChanged)
-            
+
     else :
         fileNameChanged = changeSpace(fileName)
         fileNameChanged = mayToMin(fileNameChanged)
