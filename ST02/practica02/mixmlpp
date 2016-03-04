@@ -16,6 +16,9 @@ def openFile (fileName , mode) :
         raise SystemExit
 
 
+def isemptyargs (arguments) :
+    return arguments.input == None and not arguments.modify and arguments.output == None
+
 
 def cntrlArgs (arguments) :
     dataFile = ""
@@ -24,31 +27,42 @@ def cntrlArgs (arguments) :
         sys.stderr.write("Error -m and OUTPUT option are incompatibles" + '\n')
         raise SystemExit
 
-    fileR = openFile(arguments.fileIn , "r")
-    dataFile = fileR.read()
-    if not arguments.modify and arguments.output == None:
-        xmlpp.pprint(dataFile , sys.stdout , TAB , 80)
+    if not isemptyargs(arguments):
 
-    if not arguments.modify and arguments.output != None:
-        fileW = openFile(arguments.output , "w")
-        xmlpp.pprint(dataFile , fileW , TAB , 80)
+        fileR = openFile(arguments.input , "r")
+        dataFile = fileR.read()
+        fileR.close()
 
-    if arguments.modify and arguments.output == None:
-        fileW = openFile("/tmp/a" , "w")
-        xmlpp.pprint(dataFile , fileW , TAB , 80)
-        shutil.move("/tmp/a" , arguments.fileIn)
+        if not arguments.modify and arguments.output == None:
+            xmlpp.pprint(dataFile , sys.stdout , TAB , 80)
 
+        if not arguments.modify and arguments.output != None:
+            fileW = openFile(arguments.output , "w")
+            xmlpp.pprint(dataFile , fileW , TAB , 80)
+            fileW.close()
+
+
+        if arguments.modify and arguments.output == None:
+            fileW = openFile("/tmp/a" , "w")
+            xmlpp.pprint(dataFile , fileW , TAB , 80)
+            fileW.close()
+            shutil.move("/tmp/a" , arguments.input)
+
+    else :
+
+        print "Read stdin"
 
 def main () :
 
-    usage = "%prog [OPCIONES] input output you have to pass input file like argument"
+    usage = "%prog [OPCIONES] input output if not arguments we read stdin"
     parser = argparse.ArgumentParser(usage)
 
-    parser.add_argument("fileIn"  ,  help = "xml file to format")
-    parser.add_argument("-o" , "--output" , action="store" , dest="output" , help = "xml output file format")
+    parser.add_argument("-i" , "--input"  , action="store" ,     dest="input"  , help = "xml file to format")
+    parser.add_argument("-o" , "--output" , action="store" ,     dest="output" , help = "xml output file format")
     parser.add_argument("-m" , "--modify" , action="store_true", dest="modify" , help="modify this file in format XML")
 
     arguments = parser.parse_args()
+
     cntrlArgs(arguments)
 
 if __name__ == "__main__" :
