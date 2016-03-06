@@ -50,7 +50,10 @@ def cntrlArgs (arguments) :
 
     else :
 
-        print "Read stdin"
+        for linea in sys.stdin.readlines():
+            dataFile += linea
+        xmlpp.pprint(dataFile , sys.stdout , TAB , 80)
+
 
 def main () :
 
