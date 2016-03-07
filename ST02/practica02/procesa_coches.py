@@ -7,18 +7,52 @@ import sys , os , shutil
 import argparse
 import xml.etree.ElementTree as ET
 
-def formatfile (tag  , attr , text , header) :
-    listkeys = attr.keys()
+def valuelenmax (attrs) :
+    listkeys = attrs.keys()
     listkeys.sort()
-    if not header :
-        for x in listkeys :
-            print "   " +  x.upper() + "   ",
-        print
-        print "---------------------------------------------"
-    for x in listkeys :
-        print "   " +  attr[x] + "   ",
+    maxval = 0
+    for x  in listkeys :
+        if len(attrs[x]) > maxval :
+            maxval = len(attrs[x])
+    return maxval
+
+def printmargen (margen) :
+    for x in range(margen) :
+        print '' ,
+
+def formatWhites (attrval , whites , total) :
+    if whites <= 0 :
+        print attrval ,
+    else :
+        margen = (whites / 2) + total
+        print margen ,
+        printmargen(margen)
+        print attrval ,
+
+
+def printast (maxline) :
+    print
+    for x in range(maxline) :
+        print "-",
     print
 
+def formatfile (tag  , attrs , text , header) :
+    listkeys = attrs.keys()
+    listkeys.sort()
+    whites = valuelenmax(attrs)
+    total = 0
+    if not header :
+
+        for x in listkeys :
+            value = len(x)
+            formatWhites(x.upper() , whites , 0)
+        printast(whites * len(listkeys))
+
+    for x in listkeys :
+        formatWhites(attrs[x] , whites , total)
+        value = len(attrs[x])
+        total = whites - value
+    print
 
 def getXML(filename) :
 
@@ -29,7 +63,6 @@ def getXML(filename) :
         else :
             root = ET.ElementTree(file=sys.stdin).getroot()
 
-
         header = False
         for elemento in root.iter() :
             if root.tag != elemento.tag :
@@ -38,7 +71,6 @@ def getXML(filename) :
                     header = True
 
     except ET.ParseError :
-
         sys.stderr.write("Error process file xml not well formed file xml" + '\n')
         raise SystemExit
 
