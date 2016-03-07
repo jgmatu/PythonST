@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>st_practica_03</TITLE>
+<META NAME="description" CONTENT="st_practica_03">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="st_practica_03.css">
+
+</HEAD>
+
+<BODY >
+<BIG CLASS="LARGE">
+<B>Prácticas con fechas y horas </B>  
+<BR>
+Servicios Telemáticos 2015-2016
+<BR>
+Grado en Ingeniería Telemática  
+<BR>
+Universidad Rey Juan Carlos
+<BR>
+<A HREF="http://gsyc.urjc.es">http://gsyc.urjc.es</A>
+</BIG><BIG CLASS="LARGE"><HR></BIG>
+
+<P>
+<BR>
+<BR>
+
+<P>
+
+<H1><A NAME="SECTION00010000000000000000">
+Observaciones</A>
+</H1>
+
+<UL>
+<LI>Crea el directorio <code>~/st/practica03</code> donde escribirás el resto de ficheros de esta práctica. 
+Recuerda que la recogida de las prácticas 
+se hará automáticamente el dia del examen, así que es muy importante que respetes al pie de la letra todos los
+nombres de ficheros y directorios que indiquen todos los enunciados. 
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+Práctica 3.1 Zonas horarias</A>
+</H1>
+
+<P>
+Escribe un fichero
+<code>~/st/practica03/fechas.py</code>
+que
+
+<P>
+
+<OL>
+<LI>Aceptará desde la entrada estándar un fichero de texto que contendra, en cada línea: el número de
+línea (empezando en 1) , un espacio y una fecha
+
+<P>
+</LI>
+<LI>El formato de la fecha podrá ser o bien  <SPAN  CLASS="textit">unix timestamp</SPAN> o bien <SPAN  CLASS="textit">aaaa-mm-dd hh:mm:ss, ciudad</SPAN>
+
+<P>
+Donde ciudad podrá ser 
+<SPAN  CLASS="textit">Madrid</SPAN>,
+<SPAN  CLASS="textit">Londres</SPAN>,
+<SPAN  CLASS="textit">Moscu</SPAN>,
+<SPAN  CLASS="textit">Tokio</SPAN>,  
+<SPAN  CLASS="textit">New_York</SPAN> o
+<SPAN  CLASS="textit">UTC</SPAN>
+y cada línea podrá emplear un formato o ciudad distinto
+
+<P>
+Ejemplo:
+
+<P>
+<PRE>
+1 1994-01-13 14:35:41, New_York
+2 2013-06-19 15:09:25, Madrid
+3 2001-07-25 12:35:18, UTC
+4 1042844045
+5 1456918220
+6 1981-05-09 09:16:34, Madrid
+7 248069404
+8 1974-03-24 15:30:39, Moscu
+9 2008-07-20 20:23:55, Moscu
+10 2001-12-07 11:47:14, New_York
+</PRE>
+
+<P>
+</LI>
+<LI>Si alguna línea no cumple con esta especificación, el script deberá mostrar un mensaje de error en stderr y morir
+
+<P>
+</LI>
+<LI>Si el script programa no recibe ninguna opción, o si recibe la opción <code>-t utc</code> o <code>--timezone utc</code>
+mostrará por salida estándar el número de línea (empezando por 1) y la hora UTC correspondiente a cada fecha de 
+la entrada, con el formato del siguiente ejemplo:
+
+<P>
+<PRE>
+1 1994-01-13 19:35:41+00:00
+2 2013-06-19 13:09:25+00:00
+3 2001-07-25 12:35:18+00:00
+4 2003-01-17 23:54:05+00:00
+5 2016-03-02 12:30:20+00:00
+6 1981-05-09 07:16:34+00:00
+7 1977-11-11 05:10:04+00:00
+8 1974-03-24 12:30:39+00:00
+9 2008-07-20 16:23:55+00:00
+10 2001-12-07 16:47:14+00:00
+</PRE>
+
+<P>
+Observa que este es el formato por omisión que emplea python al convertir un datetime con
+zona en cadena, no tendrás que personalizar el formato
+
+<P>
+</LI>
+<LI>Si el script recibe la opción 
+<code>-t epoch</code> o <code>--timezone epoch</code>
+mostrará por salida estándar el número de línea (empezando por 1) y el timestamp unix correspondiente
+a cada fecha de la entrada
+
+<P>
+Ejemplo
+
+<P>
+<PRE>
+1 758486141
+2 1371640165
+3 996057318
+4 1042844045
+5 1456918220
+6 358233394
+7 248069404
+8 133356639
+9 1216563835
+10 1007740034
+</PRE>
+
+<P>
+</LI>
+<LI>Si el script recibe la opción 
+<code>-t madrid</code> o <code>--timezone madrid</code>
+mostrará por salida estándar el número de línea (empezando por 1) y la hora local de madrid, con el formato del
+siguiente ejemplo:
+
+<P>
+<PRE>
+1 1994-01-13 20:35:41+01:00
+2 2013-06-19 15:09:25+02:00
+3 2001-07-25 14:35:18+02:00
+4 2003-01-18 00:54:05+01:00
+5 2016-03-02 13:30:20+01:00
+6 1981-05-09 09:16:34+02:00
+7 1977-11-11 06:10:04+01:00
+8 1974-03-24 13:30:39+01:00
+9 2008-07-20 18:23:55+02:00
+10 2001-12-07 17:47:14+01:00
+</PRE>
+
+<P>
+</LI>
+<LI>De la misma manera, el script podrá recibir con las opción <code>-t --timezone</code> las
+cadenas 
+<SPAN  CLASS="textit">londres</SPAN>,
+<SPAN  CLASS="textit">moscu</SPAN>,
+<SPAN  CLASS="textit">tokio</SPAN>,  
+<SPAN  CLASS="textit">new_york</SPAN> 
+(observa que son minúsculas)
+y el comportamiento será análogo al anterior.
+
+<P>
+</LI>
+</OL>
+Usa el fichero
+<A HREF="http://gsyc.es/~mortuno/st/fechas.txt">fechas.txt</A>
+para probar tu script, y compara la salida con los resultados
+que encontrarás en
+<A HREF="http://gsyc.es/~mortuno/st/solucionfechas.txt">solucionfechas.txt</A>
+para comprobar que se comporta correctamente
+
+<P>
+<BR><HR>
+
+</BODY>
+</HTML>

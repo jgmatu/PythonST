@@ -7,46 +7,57 @@ import sys , os , shutil
 import argparse
 import xml.etree.ElementTree as ET
 
-def printAttr (attr) :
-    for x in attr.keys() :
-        print u"Attribute   : ",
-        print x  ,
-        print u"  Value : "  ,
-        print attr[x]
-        #indice = 0
-        #while indice < len(attr[x]) :
-        #    letra = attr[x][indice]
-        #    print unicode(letra)
-        #    indice = indice + 1
-
-def formatfile (tag  , attr , text) :
-        print u"Etiqueta : " , tag
-        #printAttr(attr)
-        print attr
-        if text != None :
-            print u"Texto : " , text
+def formatfile (tag  , attr , text , header) :
+    listkeys = attr.keys()
+    listkeys.sort()
+    if not header :
+        for x in listkeys :
+            print "   " +  x.upper() + "   ",
+        print
+        print "---------------------------------------------"
+    for x in listkeys :
+        print "   " +  attr[x] + "   ",
+    print
 
 
 def getXML(filename) :
-    root = ET.ElementTree(file=filename).getroot()
-    for elemento in root.iter() :
-        formatfile(elemento.tag , elemento.attrib , elemento.text)
 
+    try :
+
+        if filename != None :
+            root = ET.ElementTree(file=filename).getroot()
+        else :
+            root = ET.ElementTree(file=sys.stdin).getroot()
+
+
+        header = False
+        for elemento in root.iter() :
+            if root.tag != elemento.tag :
+                formatfile(elemento.tag , elemento.attrib , elemento.text , header)
+                if not header :
+                    header = True
+
+    except ET.ParseError :
+
+        sys.stderr.write("Error process file xml not well formed file xml" + '\n')
+        raise SystemExit
 
 def main() :
     usage = u"%prog [OPCIONES] input output if not arguments we read stdin"
     parser = argparse.ArgumentParser(usage)
 
-    parser.add_argument("-i" , "--input"  , action="store" ,     dest="input"  , help = "xml file to format")
+    parser.add_argument("-i" , "--input"  , action="store" ,     dest="input" \
+                            , help = "xml file to format")
     arguments = parser.parse_args()
 
     if arguments.input == None :
-        print u"read from stdin"
+        getXML(None)
     else :
-        print u"reading from file " + arguments.input
+
         if not os.path.exists(arguments.input) :
             print u"File : " + arguments.input + u" not exist."
             raise SystemExit
+
         getXML(arguments.input)
 
 

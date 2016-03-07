@@ -48,7 +48,7 @@ def getLine (line , numline , errline) :
     for x in range(len(line)) :
         try :
             result.append(int(line[x]))
-        except :
+        except ValueError :
             invalidline(numline , errline)
             raise SystemExit
 
@@ -80,7 +80,7 @@ def openFile (fileName , mode) :
     try :
         fich = open(fileName , mode)
         return fich
-    except :
+    except IOError:
         sys.stderr.write("Error open file " + fileName + " mode : " + mode.upper())
         raise SystemExit
 

@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>st_practica_02</TITLE>
+<META NAME="description" CONTENT="st_practica_02">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="st_practica_02.css">
+
+</HEAD>
+
+<BODY >
+<BIG CLASS="LARGE">
+<B>Prácticas de XML </B>  
+<BR>
+Servicios Telemáticos 2015-2016
+<BR>
+Grado en Ingeniería Telemática  
+<BR>
+Universidad Rey Juan Carlos
+<BR>
+<A HREF="http://gsyc.urjc.es">http://gsyc.urjc.es</A>
+</BIG><BIG CLASS="LARGE"><HR></BIG>
+
+<P>
+<BR>
+<BR>
+
+<P>
+
+<H1><A NAME="SECTION00010000000000000000">
+Observaciones</A>
+</H1>
+
+<UL>
+<LI>Crea el fichero  <code>~/st/practica02.txt</code>,
+que contendrá la memoria que escribas sobre  este segundo bloque de
+prácticas. 
+En la primera línea, indica tu nombre y login. 
+
+<P>
+En la memoria no es necesario que vuelvas a escribir el enunciado. 
+
+<P>
+Cuando la ejecución de un apartado de una práctica muestre algo en stdout, es necesario que copies 
+esta salida y la pegues en la memoria.
+
+<P>
+Crea el directorio <code>~/st/practica02</code> donde escribirás el resto de ficheros de esta práctica. 
+Recuerda que la recogida de las prácticas 
+se hará automáticamente el dia del examen, así que es muy importante que respetes al pie de la letra todos los
+nombres de ficheros y directorios que indiquen todos los enunciados. 
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+Práctica 2.1. Holamundo xml</A>
+</H1>
+
+<P>
+
+<OL>
+<LI>Escribe un fichero
+
+<P>
+<code>~/st/practica02/coches.xml</code>
+
+<P>
+que contenga los datos de un par de coches. Hazlo muy sencillo, prácticamente
+un <SPAN  CLASS="textit">holamundo</SPAN>, que contenga solo la matrícula, marca y modelo. Dale la estructura que consideres oportuna.
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+Práctica 2.2.  xmlpp</A>
+</H1>
+
+<P>
+Ahora usarás una herramienta de <SPAN  CLASS="textit">pretty printing</SPAN> para XML, esto es, un procesador que
+retoca un fichero para mejorar su presentación.
+
+<P>
+
+<OL>
+<LI>Si no tienes directorio 
+<code>~/bin</code>, créatelo
+
+<P>
+</LI>
+<LI>Comprueba tu variable de entorno PATH ejecutando en la shell la orden
+<code>echo $PATH</code>
+
+<P>
+Si 
+<code>~/bin</code> 
+no está incluido en tu PATH, añádelo. Para ello tendrás que editar el fichero 
+<code>~/.bashrc</code>
+añadiendo la sentencia
+<code>export PATH=$PATH:$HOME/bin</code>
+
+<P>
+</LI>
+<LI>Descarga xmlpp
+<A HREF="http://gsyc.es/~mortuno/docs/xmlpp">xmlpp</A>
+
+<P>
+y guárdalo en
+<code>~/bin</code>
+
+<P>
+</LI>
+<LI>Añádele permiso de ejecución 
+
+<P>
+</LI>
+<LI>Usando xmlpp, dale formato a
+
+<P>
+<code>~/st/practica02/coches.xml</code>
+
+<P>
+Para ello, debes invocar xmlpp, pasando el fichero a formatear como primer 
+argumento.
+
+<P>
+<PRE>
+xmlpp ejemplo.xml
+</PRE>
+
+<P>
+Observa que xmlpp no modifica el fichero original, sino que muestra en stdout
+el fichero formateado. Usa redirecciones para que el fichero original quede
+formateado.
+
+<P>
+Ten cuidado de no hacer nunca algo como esto
+
+<P>
+<PRE>
+xmlpp ejemplo.xml  &gt; ejemplo.xml  # ¡¡ESTO ESTÁ MAL!!
+</PRE>
+
+<P>
+Porque estarías leyendo y escribiendo simultáneamente el mismo fichero, lo que
+tendría resultados impredecibles. Tienes que llevar la salida a un fichero distinto,
+renombrándolo luego si es necesario.
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000">
+Práctica 2.3.  xmlcheck</A>
+</H1>
+
+<P>
+Para comprobar que los documentos xml que escribes están bien formados, usaremos
+el script xmlcheck, que procesa el documento usando la librería cElementTree,
+muestra un mensaje si el fichero es correcto o levante una excepción en caso contrario
+
+<P>
+
+<OL>
+<LI>Descarga 
+<A HREF="http://gsyc.es/~mortuno/docs/xmlcheck">xmlcheck</A>
+y guárdalo en
+<code>~/bin</code>
+
+<P>
+</LI>
+<LI>Dale permiso de ejecución
+
+<P>
+</LI>
+<LI>Usando este script, comprueba que todos los documentos xml que escribas en esta práctica
+están bien formados (tanto los del apartado anterior como los de los apartados posteriores)
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00050000000000000000">
+Práctica 2.4.  discoteca.xml</A>
+</H1>
+
+<P>
+
+<OL>
+<LI>Escribe el documento
+<code>~/st/practica02/discoteca01.xml</code>
+
+<P>
+Contendrá los datos principales de un par de discos de música cualquiera. Googlea
+la información de los discos. Usa
+la estructura que te parezca adecuada, incluyendo algunos de los datos principales:
+titulo del disco, autor o autores, fecha de producción y/o publicación, canciones,
+duración, etc
+</LI>
+<LI>Escribe el documento
+<code>~/st/practica02/discoteca02.xml</code>
+
+<P>
+que contendrá la misma información, pero elige una estructura diferente. 
+Puedes cambiar el uso de texto o atributos, los nombres de las etiquetas, etc.
+Obviamente, todos los documentos que escribas tienen que estar bien formados y
+tienes que tabularlos de forma claramente legible (con xmlpp)
+Además, todos los documentos tienen que respetar las indicaciones sobre
+XML que encontrarás en las transparencias (especialmente lo relativo a
+representar las <SPAN  CLASS="textit">listas de cosas</SPAN> como una serie de elementos del
+mismo tipo)
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00060000000000000000">
+Práctica 2.5.  mixmlpp</A>
+</H1>
+
+<P>
+Hemos visto que el programa xmlpp es conveniente para dar formato a un documento xml.
+Pero no modifica el documento original, sino que envía el documento a la salida estándar.
+
+<P>
+Ahora vas a programar el script
+
+<P>
+<code>~/st/practica02/mixmlpp</code>
+
+<P>
+que usará xmlpp como módulo, para obtener nueva funcionalidad. Para que veas que en UNIX no es
+necesario que un script tenga extensión, usa exactamente ese nombre, mixmlpp, no 
+xmlpp.py.
+
+<P>
+
+<OL>
+<LI>mixmlpp importará xmlpp, del que usará la siguiente función:
+
+<P>
+<PRE>
+pprint(xml, output=_sys.stdout, indent=4, width=80):
+</PRE>
+
+<P>
+El primer parámetro es una cadena de texto que contiene el documento xml completo.
+
+<P>
+El segundo parámetro es un objeto fichero, ya abierto para escritura, donde se escribirá
+el fichero con formato. Si no se pasa este parámetro, la función usará la salida estándar.
+
+<P>
+El tercer parámetro es el número de espacios correspondientes a un nuevo nivel de
+indentado. Si no se pasa este parámetro, la función usará 4.
+
+<P>
+El cuarto parámetro es el tamaño del la lúneas. Si no se pasa, la función usará 80.
+</LI>
+<LI>mixmlpp usará el módulo optparse o el módulo argparse.
+
+<P>
+Como primer parámetro recibirá el fichero a leer.
+
+<P>
+Si recibe un segundo parámetro, será el nombre del fichero donde escribirá la salida. Si
+no hay segundo parámetro, escribirá en stdout, como xmlpp.
+
+<P>
+Con la opción <code>-m --modify</code>, dará formato al fichero original. Esto es, escribirá la salida
+en un fichero auxiliar y si no ha habido errores, sustituirá el fichero original por el auxiliar
+y borrará el auxiliar.
+
+<P>
+</LI>
+<LI>Si el script no puede modificar el fichero original, capturará la expcepción correspondiente y mostrará
+un mensaje por stderr.
+
+<P>
+</LI>
+<LI>Si el script recibe simultáneamete la opción <code>-m</code> y un segundo argumento, mostrará un error
+por stdout y morirá.
+    
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00070000000000000000">
+Práctica 2.6.  mixmlpp desde stdin</A>
+</H1>
+
+<P>
+Modifica mixmlpp para que si no recide ningún argumento, lea desde stdin y
+escriba en stdout
+
+<P>
+
+<H1><A NAME="SECTION00080000000000000000">
+Práctica 2.7.  procesa_coches</A>
+</H1>
+
+<P>
+Escribe un script
+<code>~/st/practica02/procesa_coches.py</code>
+
+<P>
+Recibirá un nombre de fichero como primer argumento. Si no recibe ninguno, leerá desde stdin. Procesará
+ficheros con la estructura de tu 
+<code>~/st/practica02/coches.xml</code>
+y mostrará toda la información por stdout, en forma legible y bien presentada para un humano, esto
+es, con estructura tabular y sin formato xml
+
+<P>
+Similar a esto:
+  <PRE>
+Matricula  Marca   Modelo
+-------------------------
+9732CLM    Opel    Corsa
+M0894MK    Seat    Panda
+0371BCM    Honda   Civic
+</PRE>
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
+Práctica 2.8.  procesa_discoteca</A>
+</H1>
+
+<P>
+Escribe un script
+<code>~/st/practica02/procesa_discoteca.py</code>
+
+<P>
+Hará lo mismo que 
+<code>procesa_coches.py</code>, pero con tu fichero 
+<code>discoteca.xml</code>
+
+<P>
+<BR><HR>
+
+</BODY>
+</HTML>

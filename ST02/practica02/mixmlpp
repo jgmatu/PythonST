@@ -11,7 +11,7 @@ def openFile (fileName , mode) :
     try :
         fich = open(fileName , mode)
         return fich
-    except :
+    except IOError :
         sys.stderr.write("Error open file " + fileName + " mode : " + mode.upper())
         raise SystemExit
 
