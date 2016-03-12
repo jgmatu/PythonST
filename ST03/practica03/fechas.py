@@ -121,7 +121,7 @@ def printnumLine (numline) :
         print numline + '',
 
 
-def getDateTime (dateformat , zone) :
+def getDateTime (dateformat) :
     year = getYear(dateformat[1].split('-'))
     month = getMonth(dateformat[1].split('-'))
     day = getDay(dateformat[1].split('-'))
@@ -129,22 +129,40 @@ def getDateTime (dateformat , zone) :
     minute = getMinute(dateformat[2].split(':'))
     second = getSecond(dateformat[2].split(':'))
 
-    dt = datetime.datetime(year , month , day , hour , minute , second , tzinfo=zone)
-
+    dt = datetime.datetime(year , month , day , hour , minute , second)
     return dt
+
+def getTimeZone (zone) :
+    zones = ["madrid", "londres" , "moscu" , "tokio" , "new_york" , "utc"]
+    zonesdt = []
+
+    zonesdt.append(pytz.timezone("Europe/Madrid"))
+    zonesdt.append(pytz.timezone("Europe/London"))
+    zonesdt.append(pytz.timezone("Europe/Moscow"))
+    zonesdt.append(pytz.timezone("Asia/Tokyo"))
+    zonesdt.append(pytz.timezone("America/New_York"))
+    zonesdt.append(pytz.timezone("UTC"))
+
+    print str(zonesdt[zones.index(zone)]) + " " + zone
+    return zonesdt[zones.index(zone)]
 
 def impUTCdf (numline , dateformat , zone) :
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
-    dt  = getDateTime(dateformat , utc)
+
+    dt = getDateTime(dateformat)
+    zonetime = getTimeZone(zone.lower())
+
+    dt = zonetime.localize(dt)
+    dt = dt.astimezone(utc)
 
     printnumLine(numline)
     print dt.strftime(fmt)
 
 
 def impUTCts (numline , ts) :
-    utc = pytz.utc
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
+    utc = pytz.utc
 
     # Convert Timestamp in datetime
     dt = datetime.datetime.fromtimestamp(ts)
@@ -158,32 +176,27 @@ def imptsts (numline , ts) :
     printnumLine(numline)
     print ts
 
-def imptsdt (numline , dateformat) :
+def imptsdf (numline , dateformat , zone) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
-    utc=pytz.utc
-    ts=time.time()
+    utc = pytz.utc
+    ts = time.time()
 
     #Convert data time in Timestamp
-    dt = getDateTime(dateformat , utc)
+    dt = getDateTime(dateformat)
+    timezone = getTimeZone(zone.lower())
+
+    dt = timezone.localize(dt)
+    dt = dt.astimezone(utc)
+
     ts = time.mktime(dt.timetuple())
+
+    zone =  zone.strip()
+
+    if zone.lower() is "madrid" :
+        ts += time.timezone
 
     printnumLine(numline)
     print int(ts)
-
-
-def getTimeZone (zone) :
-    zones = ["madrid", "londres" , "moscu" , "tokio" , "new_york" , "utc"]
-    zonesdt = []
-
-    zonesdt.append(pytz.timezone("Etc/GMT+1"))
-    zonesdt.append(pytz.timezone("Etc/GMT+0"))
-    zonesdt.append(pytz.timezone("Etc/GMT+3"))
-    zonesdt.append(pytz.timezone("Etc/GMT+9"))
-    zonesdt.append(pytz.timezone("Etc/GMT-5"))
-    zonesdt.append(pytz.timezone("Etc/GMT+0"))
-
-    print str(zonesdt[zones.index(zone)]) + " " + zone
-    return zonesdt[zones.index(zone)]
 
 def impZonets (numline , ts , zonearg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
@@ -201,7 +214,6 @@ def impZonets (numline , ts , zonearg) :
 def impZonedf (numline , dateformat , zone , zonearg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
 
-
     print "df"
     timezone = getTimeZone(zonearg.lower())
     dt = getDateTime(dateformat , timezone)
@@ -218,14 +230,15 @@ def procline (line) :
     if len(linelist) == 2 and istimeStamp(linelist) :
 
         #impUTCts(linelist[0] , int(linelist[1]))
-        #imptsts(linelist[0] , linelist[1])
-        impZonets(linelist[0] , linelist[1] , "Madrid")
+        imptsts(linelist[0] , linelist[1])
+        #impZonets(linelist[0] , linelist[1] , "Madrid")
 
     elif len(linelist) == 4 and isUTFformat(linelist) :
 
+        print linelist[3]
         #impUTCdf(linelist[0] ,  linelist , linelist[3])
-        #imptsdt(linelist[0] , linelist)
-        impZonedf(linelist[0] , linelist, linelist[3] ,  "Madrid")
+        imptsdf(linelist[0] , linelist , linelist[3])
+        #impZonedf(linelist[0] , linelist, linelist[3] ,  "Madrid")
 
     else :
 
