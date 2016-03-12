@@ -19,7 +19,6 @@ def openFile (fileName , mode) :
 def isemptyargs (arguments) :
     return arguments.input == None and not arguments.modify and arguments.output == None
 
-
 def cntrlArgs (arguments) :
     dataFile = ""
 
