@@ -176,27 +176,22 @@ def imptsts (numline , ts) :
     printnumLine(numline)
     print ts
 
-def imptsdf (numline , dateformat , zone) :
+
+def impdtts (numline , dateformat , zone) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
-    ts = time.time()
 
-    #Convert data time in Timestamp
-    dt = getDateTime(dateformat)
+
+    #Process zone in datetime format
+    dt = getDateTime(dateformat) #Naive
+
     timezone = getTimeZone(zone.lower())
+    dt = timezone.localize(dt) # zone
+    dt = dt.astimezone(utc) #utc
 
-    dt = timezone.localize(dt)
-    dt = dt.astimezone(utc)
-
-    ts = time.mktime(dt.timetuple())
-
-    zone =  zone.strip()
-
-    if zone.lower() is "madrid" :
-        ts += time.timezone
-
+    #print datetime format Timestamp
     printnumLine(numline)
-    print int(ts)
+    print dt.strftime("%s")
 
 def impZonets (numline , ts , zonearg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
@@ -237,7 +232,7 @@ def procline (line) :
 
         print linelist[3]
         #impUTCdf(linelist[0] ,  linelist , linelist[3])
-        imptsdf(linelist[0] , linelist , linelist[3])
+        impdtts(linelist[0] , linelist , linelist[3])
         #impZonedf(linelist[0] , linelist, linelist[3] ,  "Madrid")
 
     else :

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys , os , shutil
 import pytz , time , datetime
-
+import calendar
 
 def printnumLine (numline) :
     if int(numline) < 10 :
@@ -24,7 +24,6 @@ def getTimeZone (zone) :
     zonesdt.append(pytz.timezone("America/New_York"))
     zonesdt.append(pytz.timezone("UTC"))
 
-    print str(zonesdt[zones.index(zone)]) + " " + zone.upper()
     return zonesdt[zones.index(zone)]
 
 def getDateTime (dateformat) :
@@ -39,30 +38,24 @@ def getDateTime (dateformat) :
     return dt
 
 
-def imptsdt (numline , dateformat , zone) :
+def impdtts (numline , dateformat , zone) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
-    ts = time.time()
 
-    #Convert data time in Timestamp
-    dt = getDateTime(dateformat)
+
+    #Process zone in datetime format
+    dt = getDateTime(dateformat) #Naive
+    print dt
     timezone = getTimeZone(zone.lower())
-
-    dt = timezone.localize(dt)
-
-    dt = dt.astimezone(utc)
-
-    ts = time.mktime(dt.timetuple())
-
-    if zone.strip() is "Madrid" :
-        ts += time.timezone
-
+    dt = timezone.localize(dt) # zone
+    dt = dt.astimezone(utc) #utc
+    print dt
+    #print datetime format Timestamp
     printnumLine(numline)
-    print int(ts)
-
+    print dt.strftime("%s")
 
 def main () :
-    imptsdt(str(1) , None , "Madrid")
+    impdtts(str(1) , None , "Madrid")
 
 
 if __name__ == "__main__" :

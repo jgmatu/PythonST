@@ -1,8 +1,8 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <discoteca>
-    <disco titulo="Cosas que pasan que no pasan y que deberían pasar"  autor="CHOJIN" fecha="01/03/2009">
+    <disco titulo="Cosas que pasan que no pasan y que deberian pasar"  autor="CHOJIN" fecha="01/03/2009">
         <cancion name="Arriba" colaboracion="Locus" duracion="2.28"/>
-        <cancion name="Por la mañana" colaboracion="" duracion="0.34"/>
+        <cancion name="Por la manhana" colaboracion="" duracion="0.34"/>
         <cancion name="Es loco" colaboracion="" duracion="4.03"/>
         <cancion name="Llamada a Mario" colaboracion="" duracion="0.47"/>
         <cancion name="Mi odisea" colaboracion="" duracion="3.16"/>
@@ -10,7 +10,7 @@
         <cancion name="Cosas que pasan" colaboracion="" duracion="1.49"/>
         <cancion name="El camino a la discografica" colaboracion="" duracion="0.32"/>
         <cancion name="Uh" colaboracion="" duracion="3.38"/>
-        <cancion name="Pequeñas Cosas" colaboracion="Maika Sitté" duracion="3.56"/>
+        <cancion name="Pequenhas Cosas" colaboracion="Maika Sitte" duracion="3.56"/>
         <cancion name="La llegada a la discografica" colaboracion="" duracion="0.29"/>
         <cancion name="No me importa lo que me cuenten" colaboracion="" duracion="3.53"/>
         <cancion name="La negociacion" colaboracion="" duracion="0.35"/>
@@ -18,18 +18,18 @@
         <cancion name="La pervesion del lenguage" colaboracion="El Gran Wyoming" duracion="3.19"/>
         <cancion name="Rie cuando puedas llora cuando lo necesites (Remix)" colaboracion="Luis Eduardo Aute" duracion="3.44"/>
         <cancion name="La decepcion" colaboracion="" duracion="1.07"/>
-        <cancion name="Un paso atrás" colaboracion="" duracion="3.09"/>
+        <cancion name="Un paso atras" colaboracion="" duracion="3.09"/>
         <cancion name="Cosas que no pasan" colaboracion="" duracion="1.26"/>
-        <cancion name="La decisión" colaboracion="" duracion="0.22"/>
-        <cancion name="Libre" colaboracion="Donpa y la Orquesta de cámara clave 1" duracion="5.57"/>
+        <cancion name="La decision" colaboracion="" duracion="0.22"/>
+        <cancion name="Libre" colaboracion="Donpa y la Orquesta de camara clave 1" duracion="5.57"/>
         <cancion name="Los Conciertos" colaboracion="" duracion="0.53"/>
         <cancion name="N.E.G.R.O." colaboracion="" duracion="3.14"/>
-        <cancion name="Superhéroe" colaboracion="" duracion="3.16"/>
-        <cancion name="Por ahí, por allá" colaboracion="" duracion="0.12"/>
-        <cancion name="Cosas que deberían pasar" colaboracion="" duracion="1.31"/>
+        <cancion name="Superheroe" colaboracion="" duracion="3.16"/>
+        <cancion name="Por ahi, por alla" colaboracion="" duracion="0.12"/>
+        <cancion name="Cosas que deberian pasar" colaboracion="" duracion="1.31"/>
         <cancion name="Habilidades" colaboracion="" duracion="3.40"/>
         <cancion name="El reencuentro" colaboracion="" duracion="0.47"/>
-        <cancion name="Sientensé y disfruten" colaboracion="Astrid Jones" duracion="4.31"/>
+        <cancion name="Sientense y disfruten" colaboracion="Astrid Jones" duracion="4.31"/>
         <cancion name="P.D" colaboracion="" duracion="4.06"/>
     </disco>
     <disco titulo="Cerebirs mortis" autor="Duo Kie" fecha="03/04/2011">
@@ -38,10 +38,10 @@
         <cancion name="Kies in the games" colaboracion="Kool G Rap" duracion="2.41"/>
         <cancion name="Un, dos" colaboracion="" duracion="3.13"/>
         <cancion name="Pistolas de agua" colaboracion="" duracion="3.55"/>
-        <cancion name="El último hombre furioso" colaboracion="" duracion="3.42"/>
+        <cancion name="El ultimo hombre furioso" colaboracion="" duracion="3.42"/>
         <cancion name="Voy a por ti" colaboracion="Kutxi Romero" duracion="4.31"/>
         <cancion name="Ouch" colaboracion="" duracion="3.13"/>
-        <cancion name="Rap y chimpancés" colaboracion="" duracion="3.13"/>
+        <cancion name="Rap y chimpances" colaboracion="" duracion="3.13"/>
         <cancion name="Boom!" colaboracion="" duracion="4.13"/>
         <cancion name="Si nos oyen gritar" colaboracion="" duracion="3.10"/>
         <cancion name="Rapzilla" colaboraciones="Capaz y Sho-Hai" duracion="4.21"/>
