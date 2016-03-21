@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import sys , os , shutil
-import datetime , pytz , time
+import calendar, datetime , pytz , time
 import types
+from argparse import ArgumentParser
 
 
 def openfile (fileName , mode) :
@@ -84,8 +85,8 @@ def isformathour (hourformat) :
     return ishour(hour)
 
 def isZone (string) :
-    zones = ["Madrid", "Londres" , "Moscu" , "Tokio" , "New_York" , "UTC"]
-    return string.strip() in zones
+    zones = ["madrid", "londres" , "moscu" , "tokio" , "new_york" , "utc"]
+    return string.strip().lower() in zones
 
 def isUTFformat (list) :
     return isnumber(list[0]) and isformatdate(list[1]) \
@@ -143,7 +144,6 @@ def getTimeZone (zone) :
     zonesdt.append(pytz.timezone("America/New_York"))
     zonesdt.append(pytz.timezone("UTC"))
 
-    print str(zonesdt[zones.index(zone)]) + " " + zone
     return zonesdt[zones.index(zone)]
 
 def impUTCdf (numline , dateformat , zone) :
@@ -187,17 +187,19 @@ def impdtts (numline , dateformat , zone) :
 
     timezone = getTimeZone(zone.lower())
     dt = timezone.localize(dt) # zone
+
     dt = dt.astimezone(utc) #utc
+
+    ts = calendar.timegm(dt.utctimetuple())
 
     #print datetime format Timestamp
     printnumLine(numline)
-    print dt.strftime("%s")
+    print ts
 
 def impZonets (numline , ts , zonearg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
-    print "ts"
     dt = datetime.datetime.fromtimestamp(int(ts))
     dt = utc.localize(dt)
     dt.astimezone(getTimeZone(zonearg.lower()))
@@ -209,47 +211,92 @@ def impZonets (numline , ts , zonearg) :
 def impZonedf (numline , dateformat , zone , zonearg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
 
-    print "df"
-    timezone = getTimeZone(zonearg.lower())
-    dt = getDateTime(dateformat , timezone)
-    dt = dt.astimezone(getTimeZone(zone.lower()))
+    dt = getDateTime(dateformat) # naive
+
+    timezone = getTimeZone(zone.lower())
+    dt = timezone.localize(dt)
+
+    dt = dt.astimezone(getTimeZone(zonearg.lower()))
 
     printnumLine(numline)
     print dt.strftime(fmt)
 
+def isEquals (mode , argzone) :
+    equals = True;
 
-def procline (line) :
+    if (len(mode) != len(argzone)) :
+        equals = False
+
+    pos = 0;
+    while (pos < len(mode) and equals) :
+        if (argzone[pos] == mode[pos]) :
+            pos = pos + 1
+        else :
+            equals = False
+
+    return equals
+
+
+
+def modeUTC (argzone) :
+    return argzone == None or isEquals("utc" , argzone)
+
+def modeTs (argzone) :
+    return argzone != None and isEquals("epoch" , argzone)
+
+def modeZone (argzone) :
+    return argzone != None and isZone(argzone)
+
+def isArgZone (argzone) :
+    return argzone != None and isZone(argzone)
+
+def procline (line , args) :
     linelist = []
     linelist = line.split(' ')
 
     if len(linelist) == 2 and istimeStamp(linelist) :
 
-        #impUTCts(linelist[0] , int(linelist[1]))
-        imptsts(linelist[0] , linelist[1])
-        #impZonets(linelist[0] , linelist[1] , "Madrid")
+        if modeUTC(args.argzone) :
+            impUTCts(linelist[0] , int(linelist[1]))
+
+        if modeTs(args.argzone) :
+            imptsts(linelist[0] , linelist[1])
+
+        if isArgZone(args.argzone) :
+            impZonets(linelist[0] , linelist[1] , args.argzone)
 
     elif len(linelist) == 4 and isUTFformat(linelist) :
 
-        print linelist[3]
-        #impUTCdf(linelist[0] ,  linelist , linelist[3])
-        impdtts(linelist[0] , linelist , linelist[3])
-        #impZonedf(linelist[0] , linelist, linelist[3] ,  "Madrid")
+        if modeUTC(args.argzone) :
+            impUTCdf(linelist[0] ,  linelist , linelist[3])
+
+        if modeTs (args.argzone) :
+            impdtts(linelist[0] , linelist , linelist[3])
+
+        if isArgZone(args.argzone) :
+            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone)
 
     else :
 
-        print "Bad format of time in line : " + line
+        sys.stderr.write("Bad format of time in line : " + line + '\n')
         raise SystemExit
 
 
-def readfile (filename) :
-    fileR = openfile(filename , "r")
+def readfile (args) :
     data = []
-    for x in fileR.readlines() :
+    for x in sys.stdin.readlines() :
         if x.strip() != '' :
-            procline(x.strip())
+            procline(x.strip() , args)
 
 def main () :
-    readfile("ejemplotime.txt")
+    usage = "Uso %prog [opciones]"
+    parser = ArgumentParser(usage)
+
+    parser.add_argument("-t" , "--timezone" , action="store" , \
+                            dest="argzone" , help="Zone to proc the time")
+    args = parser.parse_args()
+    readfile(args)
+
 
 if __name__ == "__main__" :
     main()

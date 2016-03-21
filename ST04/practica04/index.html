@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>st_practica_04</TITLE>
+<META NAME="description" CONTENT="st_practica_04">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="st_practica_04.css">
+
+</HEAD>
+
+<BODY >
+<BIG CLASS="LARGE">
+<B>Prácticas con json </B>  
+<BR>
+Servicios Telemáticos 2015-2016
+<BR>
+Grado en Ingeniería Telemática  
+<BR>
+Universidad Rey Juan Carlos
+<BR>
+<A HREF="http://gsyc.urjc.es">http://gsyc.urjc.es</A>
+</BIG><BIG CLASS="LARGE"><HR></BIG>
+
+<P>
+<BR>
+<BR>
+
+<P>
+
+<H1><A NAME="SECTION00010000000000000000">
+Observaciones</A>
+</H1>
+
+<UL>
+<LI>Crea el directorio <code>~/st/practica04</code> donde escribirás el resto de ficheros de esta práctica. 
+Recuerda que la recogida de las prácticas 
+se hará automáticamente el dia del examen, así que es muy importante que respetes al pie de la letra todos los
+nombres de ficheros y directorios que indiquen todos los enunciados. 
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+Práctica 4.1 jsoncheck, jsonpp</A>
+</H1>
+En esta práctica probarás jsoncheck, un pequeño programa que comprueba que un fichero contiene un
+valor json válido, y jsonpp, que hace <SPAN  CLASS="textit">pretty printing</SPAN> de un fichero con valores json.
+Ambor trabajan a partir de un fichero leído por stdin
+
+<P>
+
+<OL>
+<LI>Descarga 
+<A HREF="http://gsyc.es/~mortuno/st/jsoncheck">jsoncheck</A>
+y
+<A HREF="http://gsyc.es/~mortuno/st/jsonpp">jsonpp</A>
+
+<P>
+y guárdalo en
+<code>~/bin</code>
+
+<P>
+</LI>
+<LI>Escribe un objeto json de tipo <SPAN  CLASS="textit">holamundo</SPAN> con un par de pares valor-clave y úsalo
+para probar jsoncheck y jsonpp
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+Práctica 4.2 coches.json </A>
+</H1>
+
+<P>
+Escribe un fichero json
+<code>~/st/practica04/coches.json</code>
+con la misma información que tu fichero
+<code>~/st/practica02/coches.xml</code>
+
+<P>
+Compruébalo con jsoncheck, dale formato con jsonpp
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000">
+Práctica 4.3 discoteca.json </A>
+</H1>
+
+<P>
+Escribe un fichero json
+<code>~/st/practica04/discoteca.json</code>
+con la misma información que tu fichero
+<code>~/st/practica02/discoteca.xml</code>
+
+<P>
+Compruébalo con jsoncheck, dale formato con jsonpp
+
+<P>
+
+<H1><A NAME="SECTION00050000000000000000">
+Práctica 4.4 Fechas y horas en json </A>
+</H1>
+
+<P>
+Modifica el script
+
+<P>
+<code>~/st/practica03/fechas.py</code>
+
+<P>
+para que en caso de recibir la opción 
+<code>-j --json</code> muestre la salida en formato json. Deberá generar un objeto, cuya clave
+será el número de línea (1,2,3...) y cuyo valor será o bien una cadena con la fecha y la hora
+o bien el timestamp como número (no como cadena). 
+
+<P>
+Observa que:
+
+<P>
+
+<UL>
+<LI>Solo cambia el formato de la salida, la información contenida y el resto del comportamiento del script
+será idéntico al comportamiento en la práctica 3
+
+<P>
+</LI>
+<LI>Aunque esta es la práctica 4, estás modificando un fichero del directorio
+<code>~/st/practica03</code>
+    
+</LI>
+</UL>
+
+<P>
+
+<H1><A NAME="SECTION00060000000000000000">
+Práctica 4.5 papeleria.py</A>
+</H1>
+
+<P>
+Escribe el script
+<code>~/st/practica04/papeleria.py</code>  (sin tilde en la i)
+que aceptará por entrada estándar un fichero en formato json según la siguiente especificación
+
+<P>
+
+<UL>
+<LI>El fichero contendrá un array de valores
+
+<P>
+</LI>
+<LI>Cada valor será un objeto
+
+<P>
+</LI>
+<LI>Cada objeto tendrá tres claves:
+ <SPAN  CLASS="textit">ref</SPAN>, cuyo valor será un número,
+ <SPAN  CLASS="textit">descripcion</SPAN> (sin tilde en la 'o'), cuyo valor será una cadena y
+ <SPAN  CLASS="textit">precio</SPAN>, cuyo valor será un número
+
+<P>
+</LI>
+<LI>El script deberá mostrar en la salida estándar la misma información, en formato tabular
+</LI>
+</UL>
+
+<P>
+Ejemplo de entrada:
+  <PRE>
+[{"descripcion": "Caja 12 l\u00e1pices", "precio": 7.54, "ref": 869468}, {"descripcion": "Papelera negra", "precio": 6.1, "ref": 968726}, {"descripcion": "Paquete 500 hojas A4", "precio": 5.4, "ref": 518196}]
+</PRE>
+
+<P>
+Descarga 
+<A HREF="http://gsyc.es/~mortuno/st/libreria.json">este ejemplo</A>
+para probar tu práctica 
+
+<P>
+La salida deberá tener un aspecto similar a este:
+  <PRE>
+Ref.     Precio   Descripción
+-------------------------------------------------------------------
+869468   7.54     Caja 12 lápices
+968726   6.10     Papelera negra
+518196   5.40     Paquete 500 hojas A4
+</PRE>
+
+<P>
+
+<H1><A NAME="SECTION00070000000000000000">
+Práctica 4.6 inflacion.py</A>
+</H1>
+Escribe el script
+<code>~/st/practica04/inflacion.py</code>
+que
+
+<P>
+
+<UL>
+<LI>Aceptará desde stdin un fichero json con el formato descrito en el apartado anterior
+
+<P>
+</LI>
+<LI>Tendrá definida una constante llamada INFLACION. Será un objeto (una variable) que aparecerá 
+al principio del código, inmediatamente después de las sentencias import
+
+<P>
+</LI>
+<LI>Mostrará en stdout el mismo fichero que a la entrada, con el mismo formato, pero con los
+precios multiplicados por 1+(INFLACION*0.01)
+
+<P>
+Ejemplo: si INFLACION vale 3 y el precio era 7.54, el nuevo precio será 7.7662
+    
+</LI>
+</UL>
+<BR><HR>
+
+</BODY>
+</HTML>
