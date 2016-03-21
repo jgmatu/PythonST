@@ -5,6 +5,7 @@ import sys , os , shutil
 import calendar, datetime , pytz , time
 import types
 from argparse import ArgumentParser
+import json
 
 
 def openfile (fileName , mode) :
@@ -146,7 +147,7 @@ def getTimeZone (zone) :
 
     return zonesdt[zones.index(zone)]
 
-def impUTCdf (numline , dateformat , zone) :
+def impUTCdf (numline , dateformat , zone , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
@@ -156,11 +157,13 @@ def impUTCdf (numline , dateformat , zone) :
     dt = zonetime.localize(dt)
     dt = dt.astimezone(utc)
 
-    printnumLine(numline)
-    print dt.strftime(fmt)
+    if not jsonarg :
+        printnumLine(numline)
+        print dt.strftime(fmt)
+    else :
+        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
 
-
-def impUTCts (numline , ts) :
+def impUTCts (numline , ts , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
@@ -168,16 +171,23 @@ def impUTCts (numline , ts) :
     dt = datetime.datetime.fromtimestamp(ts)
     dt = utc.localize(dt)
 
-    printnumLine(numline)
-    print dt.strftime(fmt)
-
-def imptsts (numline , ts) :
-
-    printnumLine(numline)
-    print ts
+    if not jsonarg :
+        printnumLine(numline)
+        print dt.strftime(fmt)
+    else :
+        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
 
 
-def impdtts (numline , dateformat , zone) :
+def imptsts (numline , ts , jsonarg) :
+
+    if not jsonarg :
+        printnumLine(numline)
+        print ts
+    else :
+        print json.dumps({numline:int(ts)} , sort_keys=True , indent=4)
+
+
+def impdtts (numline , dateformat , zone , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
@@ -193,10 +203,14 @@ def impdtts (numline , dateformat , zone) :
     ts = calendar.timegm(dt.utctimetuple())
 
     #print datetime format Timestamp
-    printnumLine(numline)
-    print ts
+    if not jsonarg :
+        printnumLine(numline)
+        print ts
+    else :
+        print json.dumps({numline:ts} , sort_keys=True , indent=4)
 
-def impZonets (numline , ts , zonearg) :
+
+def impZonets (numline , ts , zonearg , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
@@ -204,11 +218,14 @@ def impZonets (numline , ts , zonearg) :
     dt = utc.localize(dt)
     dt.astimezone(getTimeZone(zonearg.lower()))
 
-    printnumLine(numline)
-    print dt.strftime(fmt)
+    if not jsonarg :
+        printnumLine(numline)
+        print dt.strftime(fmt)
+    else :
+        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
 
 
-def impZonedf (numline , dateformat , zone , zonearg) :
+def impZonedf (numline , dateformat , zone , zonearg , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
 
     dt = getDateTime(dateformat) # naive
@@ -218,8 +235,11 @@ def impZonedf (numline , dateformat , zone , zonearg) :
 
     dt = dt.astimezone(getTimeZone(zonearg.lower()))
 
-    printnumLine(numline)
-    print dt.strftime(fmt)
+    if not jsonarg :
+        printnumLine(numline)
+        print dt.strftime(fmt)
+    else :
+        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
 
 def isEquals (mode , argzone) :
     equals = True;
@@ -233,7 +253,6 @@ def isEquals (mode , argzone) :
             pos = pos + 1
         else :
             equals = False
-
     return equals
 
 
@@ -257,24 +276,24 @@ def procline (line , args) :
     if len(linelist) == 2 and istimeStamp(linelist) :
 
         if modeUTC(args.argzone) :
-            impUTCts(linelist[0] , int(linelist[1]))
+            impUTCts(linelist[0] , int(linelist[1]) , args.json)
 
         if modeTs(args.argzone) :
-            imptsts(linelist[0] , linelist[1])
+            imptsts(linelist[0] , linelist[1] , args.json)
 
-        if isArgZone(args.argzone) :
-            impZonets(linelist[0] , linelist[1] , args.argzone)
+        if isArgZone(args.argzone) and not modeUTC(args.argzone) :
+            impZonets(linelist[0] , linelist[1] , args.argzone , args.json)
 
     elif len(linelist) == 4 and isUTFformat(linelist) :
 
         if modeUTC(args.argzone) :
-            impUTCdf(linelist[0] ,  linelist , linelist[3])
+            impUTCdf(linelist[0] ,  linelist , linelist[3] , args.json)
 
         if modeTs (args.argzone) :
-            impdtts(linelist[0] , linelist , linelist[3])
+            impdtts(linelist[0] , linelist , linelist[3] , args.json)
 
-        if isArgZone(args.argzone) :
-            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone)
+        if isArgZone(args.argzone) and not modeUTC(args.argzone):
+            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone , args.json)
 
     else :
 
@@ -294,9 +313,11 @@ def main () :
 
     parser.add_argument("-t" , "--timezone" , action="store" , \
                             dest="argzone" , help="Zone to proc the time")
+    parser.add_argument("-j" , "--json" , dest="json" , action="store_true" , \
+                            help="Output in json format")
+
     args = parser.parse_args()
     readfile(args)
-
 
 if __name__ == "__main__" :
     main()
