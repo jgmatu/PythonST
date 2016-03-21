@@ -1,0 +1,17 @@
+[
+    {
+        "matricula": "0391BGP", 
+        "modelo": "ALMEDA", 
+        "marca": "NISSAN"
+    }, 
+    {
+        "matricula": "9394CCJ", 
+        "modelo": "PICASSO", 
+        "marca": "CITROEN"
+    }, 
+    {
+        "matricula": "3145BGP", 
+        "modelo": "TT", 
+        "marca": "AUDI"
+    }
+]

@@ -1,0 +1,166 @@
+{
+    "chojin": {
+        "autor": "Chojin",
+        "titulo": "Cosas que pasan que no pasan y que deberian pasar",
+        "fecha": "01/03/2009",
+        "canciones": [
+            {
+                "duracion": 2.28,
+                "name": "Arriba",
+                "colaboracion": "Locus"
+            },
+            {
+                "duracion": 0.35,
+                "name": "Por la manhana",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.03,
+                "name": "Es Loco",
+                "colaboracion": null
+            },
+            {
+                "duracion": 0.47,
+                "name": "Llamada a Mario",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.16,
+                "name": "Mi Odisea",
+                "colaboracion": null
+            },
+            {
+                "duracion": 1.35,
+                "name": "Cosas que pasan",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.38,
+                "name": "Uh",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.56,
+                "name": "Pequenhas cosas",
+                "colaboracion": "Maika Suite"
+            },
+            {
+                "duracion": 3.53,
+                "name": "No me importa lo que me cuenten",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.35,
+                "name": "Jo Colega mala suerte",
+                "colaboracion": "Red House"
+            },
+            {
+                "duracion": 3.19,
+                "name": "La perversion del lenguaje",
+                "colaboracion": "El gran Wyoming"
+            },
+            {
+                "duracion": 3.44,
+                "name": "Rie cuando puedas llora cuando lo necesites (Remix)",
+                "colaboracion": "Luis Eduardo Aute"
+            },
+            {
+                "duracion": 3.09,
+                "name": "Un paso atras",
+                "colaboracion": null
+            },
+            {
+                "duracion": 1.19,
+                "name": "Cosas que no pasan",
+                "colaboracion": null
+            },
+            {
+                "duracion": 5.57,
+                "name": "Libre",
+                "colaboracion": "Dompha y Orquesta de camara clave 1"
+            },
+            {
+                "duracion": 3.14,
+                "name": "N.E.G.R.O",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.34,
+                "name": "Superheroe",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.01,
+                "name": "Sientense y disfruten",
+                "colaboracion": null
+            }
+        ]
+    },
+    "duokie": {
+        "autor": "Duo Kie",
+        "titulo": "Cerebris Mortis",
+        "fecha": "03/04/2011",
+        "canciones": [
+            {
+                "duracion": 3.42,
+                "name": "Pon una cifra",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.31,
+                "name": "Quien se apunta",
+                "colaboracion": null
+            },
+            {
+                "duracion": 2.31,
+                "name": "Kies in the game",
+                "colaboracion": "Kool G rap"
+            },
+            {
+                "duracion": 3.13,
+                "name": "Un, dos",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.55,
+                "name": "Pistolas de agua",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.42,
+                "name": "El ultimo hombre furioso",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.31,
+                "name": "Voy a por ti",
+                "colaboracion": "Kutxi Romero"
+            },
+            {
+                "duracion": 3.13,
+                "name": "Ouch",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.32,
+                "name": "Boom!",
+                "colaboracion": null
+            },
+            {
+                "duracion": 3.1,
+                "name": "Si nos oyen gritar",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.31,
+                "name": "Mientras Sigamos vivos",
+                "colaboracion": null
+            },
+            {
+                "duracion": 4.31,
+                "name": "Rapzilla",
+                "colaboracion": "Capaz y Sho-hai"
+            }
+        ]
+    }
+}
