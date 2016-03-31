@@ -3,6 +3,8 @@
 import sys , os , shutil
 import pytz , time , datetime
 import calendar
+import matplotlib
+from matplotlib import dates
 
 def printnumLine (numline) :
     if int(numline) < 10 :
@@ -38,24 +40,34 @@ def getDateTime (dateformat) :
     return dt
 
 
-def impdtts (numline , dateformat , zone) :
+def impdtts (numline , dateformat , zone , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
-
     #Process zone in datetime format
     dt = getDateTime(dateformat) #Naive
-    print dt
+
     timezone = getTimeZone(zone.lower())
     dt = timezone.localize(dt) # zone
     dt = dt.astimezone(utc) #utc
+
     print dt
-    #print datetime format Timestamp
-    printnumLine(numline)
-    print dt.strftime("%s")
+
+    ts = matplotlib.dates.date2num(dt)
+    ts = matplotlib.dates.num2epoch(ts)
+
+
+
+    if not jsonarg :
+        # Print datetime format Timestamp.
+        printnumLine(numline)
+        print int(ts)
+    else :
+        # Print datetime in json format.
+        print json.dumps({numline:ts} , sort_keys=True , indent=4)
 
 def main () :
-    impdtts(str(1) , None , "Madrid")
+    impdtts(str(1) , None , "Madrid" , False)
 
 
 if __name__ == "__main__" :

@@ -27,7 +27,7 @@ def add_city(ts):
     """Gets a timestamp , returns a tuple of 2 elements adding the
        same date specified as yyyy mm dd hh mm city"""
 
-    dt = datetime.datetime.fromtimestamp(ts)
+    dt = datetime.datetime.utcfromtimestamp(ts)
     dt = utc.localize(dt)
     x  = int(random.random() * 9)
 
@@ -172,7 +172,8 @@ def check(ts , dt , my_date):
     return rval
 
 def my_localize(ts, mytz):
-    dt = datetime.datetime.fromtimestamp(ts)
+    dt = datetime.datetime.utcfromtimestamp(ts)
+
     if mytz == None:
         rval=ts
     else:
