@@ -1,0 +1,20 @@
+Buenas,
+
+no entiendo muy bien el funcionamiento de las funciones check y my_date_to_dt. Entiendo que sirve para ver que las conversiones desde y hacia timestamp se hacen correctamente. Sin embargo para el string de la fecha guardado en my_date, si es una representación de timestamp no se compara, directamente se da por bueno. Después ,si el string representa una fecha se compara el ts que se generó aleatoriamente con new_ts, que es el timestamp obtenido desde el string my_date. Esta comparación se da por buena cuando ts != new_ts, es decir cuando son diferentes. ¿Qué estamos comprobando con esto?¿No debería darse por correcto cuando ts == new_ts?
+
+Por otro lado me he fijado que el script saca las soluciones directamente desde los ts que se generan aleatoriamente, no desde los strings que serían nuestro fichero fechas. De esta manera no podemos reproducir la salida de la solución con garantías ya que debemos hacer la conversión desde un datetime instanciado con lo valores leídos y localizado con la ciudad escrita en el fichero para luego cambiar a utc y pasar a timestamp (en el caso que dá problemas -t epoch), en vez de imprimir directamente el ts original que no tenemos.
+
+Un saludo y gracias.
+
+
+Tienes razón, la comprobación está al revés :-(
+
+Prueba con el generador que adjunto aquí. Ahora parece que está bien.
+
+Lo que he cambiado es la conversión de ts dt, ya no la hago con 
+
+dt=datetime.datetime.fromtimestamp(ts)
+
+sino con
+
+dt=datetime.datetime.utcfromtimestamp(ts)

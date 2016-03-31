@@ -8,7 +8,11 @@ from argparse import ArgumentParser
 import json
 
 
+#         1         2         3         4         5         6         7         8
+#123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+
 def openfile (fileName , mode) :
+
     try :
         fich = open(fileName , mode)
         return fich
@@ -18,8 +22,10 @@ def openfile (fileName , mode) :
 
 def isnumber (string) :
     try :
+
         int(string)
         return True
+
     except ValueError :
         sys.stderr.write("Error casting the field to integer " + string + '\n')
         return False
@@ -86,12 +92,11 @@ def isformathour (hourformat) :
     return ishour(hour)
 
 def isZone (string) :
-    zones = ["madrid", "londres" , "moscu" , "tokio" , "new_york" , "utc"]
+    zones = ["madrid", "londres" , "moscu" , "tokyo" , "new_york" , "utc"]
     return string.strip().lower() in zones
 
 def isUTFformat (list) :
-    return isnumber(list[0]) and isformatdate(list[1]) and \
-                isformathour(list[2]) and isZone(list[3])
+    return isnumber(list[0]) and isformatdate(list[1]) and isformathour(list[2]) and isZone(list[3])
 
 def getYear (date) :
     return int(date[0])
@@ -142,7 +147,7 @@ def getDateTime (dateformat) :
     return dt
 
 def getTimeZone (zone) :
-    zones = ["madrid", "londres" , "moscu" , "tokio" , "new_york" , "utc"]
+    zones = ["madrid", "londres" , "moscu" , "tokyo" , "new_york" , "utc"]
     zonesdt = []
 
     zonesdt.append(pytz.timezone("Europe/Madrid"))
@@ -154,8 +159,9 @@ def getTimeZone (zone) :
 
     return zonesdt[zones.index(zone.lower())]
 
-def impUTCdf (numline , dateformat , zone , jsonarg) :
-    fmt = "%Y-%m-%d %H:%M:%S %Z %z"
+def impUTCdf (numline , dateformat , zone , jsonarg , resultjson) :
+    """Convert from zone to UTC in date format."""
+    fmt = "Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
     dt = getDateTime(dateformat)
@@ -169,14 +175,16 @@ def impUTCdf (numline , dateformat , zone , jsonarg) :
         printnumLine(numline)
         print dt.strftime(fmt)
     else :
-        # Print in json format the hour.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        # Get Object in json format the hour.
+        resultjson.append({numline:str(dt)})
+        return resultjson
 
-def impUTCts (numline , ts , jsonarg) :
+def impUTCts (numline , ts , jsonarg , resultjson) :
+    """ Convert to dateformat UTC from Timestamp."""
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
-    # Convert Timestamp in datetime
+    # Convert Timestamp in datetime.
     dt = datetime.datetime.fromtimestamp(ts)
     dt = utc.localize(dt)
 
@@ -186,22 +194,24 @@ def impUTCts (numline , ts , jsonarg) :
         print dt.strftime(fmt)
     else :
         # Print json format the hour.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        resultjson.append({numline:str(dt)})
+        return resultjson
 
-
-def imptsts (numline , ts , jsonarg) :
-    """Directly the format"""
+def imptsts (numline , ts , jsonarg , resultjson) :
+    """Directly the format Timestamp to Timestamp"""
 
     if not jsonarg :
         # Default format
         printnumLine(numline)
         print ts
     else :
-        # Json format.
-        print json.dumps({numline:int(ts)} , sort_keys=True , indent=4)
+        # Json formatself.
+        resultjson.append({numline:int(ts)})
+        return resultjson
 
+def impdtts (numline , dateformat , zone , jsonarg , resultjson) :
+    """ Convert datetime format to Timestamp utc."""
 
-def impdtts (numline , dateformat , zone , jsonarg) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
@@ -211,9 +221,9 @@ def impdtts (numline , dateformat , zone , jsonarg) :
     timezone = getTimeZone(zone.lower())
     dt = timezone.localize(dt) # zone
 
-    dt = dt.astimezone(utc) #utc
-
-    ts = calendar.timegm(dt.utctimetuple())
+    ts = time.mktime(dt.timetuple())
+    ts = calendar . timegm ( dt . utctimetuple ( ) ) + 1e-6 * dt . microsecond
+    ts = calendar . timegm ( dt . utctimetuple ( ) )
 
     if not jsonarg :
         # Print datetime format Timestamp.
@@ -221,10 +231,11 @@ def impdtts (numline , dateformat , zone , jsonarg) :
         print ts
     else :
         # Print datetime in json format.
-        print json.dumps({numline:ts} , sort_keys=True , indent=4)
+        resultjson.append({numline:ts})
+        return resultjson
 
 
-def impZonets (numline , ts , zonearg , jsonarg) :
+def impZonets (numline , ts , zonearg , jsonarg , resultjson) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
@@ -241,10 +252,11 @@ def impZonets (numline , ts , zonearg , jsonarg) :
         print dt.strftime(fmt)
     else :
         #Print json format.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        resultjson.append({numline:str(dt)})
+        return resultjson
 
 
-def impZonedf (numline , dateformat , zone , zonearg , jsonarg) :
+def impZonedf (numline , dateformat , zone , zonearg , jsonarg , resultjson) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
 
     # Naive
@@ -263,7 +275,8 @@ def impZonedf (numline , dateformat , zone , zonearg , jsonarg) :
         print dt.strftime(fmt)
     else :
         #Print json format.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        resultjson.append({numline:str(dt)})
+        return resultjson
 
 def isEquals (mode , argzone) :
     equals = True;
@@ -295,24 +308,26 @@ def modeZone (argzone) :
 def isArgZone (argzone) :
     return argzone != None and isZone(argzone)
 
-def procline (line , args) :
+def procline (line , args , resultjson) :
     linelist = []
     linelist = line.split(' ')
+
 
     if len(linelist) == 2 and istimeStamp(linelist) :
         # The line is in format date to get the datetime conversion necessary.
 
         if modeUTC(args.argzone) :
             # Get the time in UTC.
-            impUTCts(linelist[0] , int(linelist[1]) , args.json)
+            impUTCts(linelist[0] , int(linelist[1]) , args.json , resultjson)
 
         if modeTs(args.argzone) :
             # Get the time in Timestamp
-            imptsts(linelist[0] , linelist[1] , args.json)
+            imptsts(linelist[0] , linelist[1] , args.json , resultjson)
 
         if isArgZone(args.argzone) and not modeUTC(args.argzone) :
             # Get the time in Zone of args.
-            impZonets(linelist[0] , linelist[1] , args.argzone , args.json)
+            impZonets(linelist[0] , linelist[1] , args.argzone , args.json , \
+                        resultjson)
 
     elif len(linelist) == 4 and isUTFformat(linelist) :
         # The line is in format Timestamp to get the datetime conversion
@@ -320,15 +335,18 @@ def procline (line , args) :
 
         if modeUTC(args.argzone) :
             # Get the time in UTC.
-            impUTCdf(linelist[0] ,  linelist , linelist[3] , args.json)
+            impUTCdf(linelist[0] ,  linelist , linelist[3] , args.json , \
+                        resultjson)
 
         if modeTs (args.argzone) :
             # Get the time in Timestamp.
-            impdtts(linelist[0] , linelist , linelist[3] , args.json)
+            impdtts(linelist[0] , linelist , linelist[3] , args.json ,  \
+                        resultjson)
 
         if isArgZone(args.argzone) and not modeUTC(args.argzone):
             # Get the time in Zone of args.
-            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone , args.json)
+            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone , \
+                        args.json , resultjson)
 
     else :
 
@@ -336,14 +354,18 @@ def procline (line , args) :
         sys.stderr.write("Bad format of time in line : " + line + '\n')
         raise SystemExit
 
-
 def readfile (args) :
     data = []
+    resultjson = []
+
     for x in sys.stdin.readlines() :
         # Read line by line the file and get the conversion of datetimes and
         # zones.
         if x.strip() != '' :
-            procline(x.strip() , args)
+            procline(x.strip() , args , resultjson)
+
+    if args.json  :
+        print json.dumps(resultjson , sort_keys=True , indent=4)
 
 def main () :
     usage = "Uso %prog [opciones]"
