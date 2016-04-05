@@ -155,7 +155,7 @@ def getTimeZone (zone) :
 
     return zonesdt[zones.index(zone.lower())]
 
-def impUTCdf (numline , dateformat , zone , jsonarg) :
+def impUTCdf (numline , dateformat , zone , jsonarg , listJson) :
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
@@ -170,15 +170,17 @@ def impUTCdf (numline , dateformat , zone , jsonarg) :
         printnumLine(numline)
         print dt.strftime(fmt)
     else :
-        # Print in json format the hour.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        #Get Object Json to Array.
+        listJson.append({numline:str(dt)})
 
-def impUTCts (numline , ts , jsonarg) :
+
+
+def impUTCts (numline , ts , jsonarg , listJson) :
     fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
     # Convert Timestamp in datetime
-    dt = datetime.datetime.fromtimestamp(ts)
+    dt = datetime.datetime.utcfromtimestamp(ts)
     dt = utc.localize(dt)
 
     if not jsonarg :
@@ -186,11 +188,11 @@ def impUTCts (numline , ts , jsonarg) :
         printnumLine(numline)
         print dt.strftime(fmt)
     else :
-        # Print json format the hour.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        # Get Object Json to Array.
+        listJson.append({numline:str(dt)})
 
 
-def imptsts (numline , ts , jsonarg) :
+def imptsts (numline , ts , jsonarg , listJson) :
     """Directly the format"""
 
     if not jsonarg :
@@ -198,11 +200,12 @@ def imptsts (numline , ts , jsonarg) :
         printnumLine(numline)
         print ts
     else :
-        # Json format.
-        print json.dumps({numline:int(ts)} , sort_keys=True , indent=4)
+        #Get Object Json to Array.
+        listJson.append({numline:int(ts)})
 
 
-def impdtts (numline , dateformat , zone , jsonarg) :
+
+def impdtts (numline , dateformat , zone , jsonarg , listJson) :
     fmt = "%Y-%m-%d %H:%M:%S  %z"
     utc = pytz.utc
 
@@ -221,32 +224,31 @@ def impdtts (numline , dateformat , zone , jsonarg) :
         printnumLine(numline)
         print int(ts)
     else :
-        # Print datetime in json format.
-        print json.dumps({numline:ts} , sort_keys=True , indent=4)
+        # Get Object Json to Array.
+        listJson.append({numline:ts})
 
 
-def impZonets (numline , ts , zonearg , jsonarg) :
-    fmt = "%Y-%m-%d %H:%M:%S  %z"
+def impZonets (numline , ts , zonearg , jsonarg , listJson) :
+    fmt = "%Y-%m-%d %H:%M:%S \t %z"
+    timezone = getTimeZone(zonearg)
     utc = pytz.utc
 
     # Time Stamp to datetime.
-    dt = datetime.datetime.fromtimestamp(int(ts))
+    dt = datetime.datetime.utcfromtimestamp(int(ts))
     dt = utc.localize(dt)
 
-    #Get Conversion from Timestamp to zone.
-    dt.astimezone(getTimeZone(zonearg))
+    dt = dt.astimezone(timezone)
 
     if not jsonarg :
         # Print default format.
         printnumLine(numline)
         print dt.strftime(fmt)
     else :
-        #Print json format.
-        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+        # Get Object Json to Array.
+        listJson.append({numline:str(dt)})
 
-
-def impZonedf (numline , dateformat , zone , zonearg , jsonarg) :
-    fmt = "%Y-%m-%d %H:%M:%S  %z"
+def impZonedf (numline , dateformat , zone , zonearg , jsonarg , listJson) :
+    fmt = "%Y-%m-%d %H:%M:%S \t %z"
 
     # Naive
     dt = getDateTime(dateformat)
@@ -263,8 +265,9 @@ def impZonedf (numline , dateformat , zone , zonearg , jsonarg) :
         printnumLine(numline)
         print dt.strftime(fmt)
     else :
-        #Print json format.
-        print json.dumps({numline:str(dt)} , sort_keys = True , indent=4)
+        # Get Object Json to Array.
+        listJson.append({numline:str(dt)})
+
 
 def isEquals (mode , argzone) :
     equals = True;
@@ -283,7 +286,6 @@ def isEquals (mode , argzone) :
     return equals
 
 
-
 def modeUTC (argzone) :
     return argzone == None or isEquals("utc" , argzone)
 
@@ -296,7 +298,7 @@ def modeZone (argzone) :
 def isArgZone (argzone) :
     return argzone != None and isZone(argzone)
 
-def procline (line , args) :
+def procline (line , args , listJson) :
     linelist = []
     linelist = line.split(' ')
 
@@ -305,15 +307,15 @@ def procline (line , args) :
 
         if modeUTC(args.argzone) :
             # Get the time in UTC.
-            impUTCts(linelist[0] , int(linelist[1]) , args.json)
+            impUTCts(linelist[0] , int(linelist[1]) , args.json , listJson)
 
         if modeTs(args.argzone) :
             # Get the time in Timestamp
-            imptsts(linelist[0] , linelist[1] , args.json)
+            imptsts(linelist[0] , linelist[1] , args.json , listJson)
 
         if isArgZone(args.argzone) and not modeUTC(args.argzone) :
             # Get the time in Zone of args.
-            impZonets(linelist[0] , linelist[1] , args.argzone , args.json)
+            impZonets(linelist[0] , linelist[1] , args.argzone , args.json , listJson)
 
     elif len(linelist) == 4 and isUTFformat(linelist) :
         # The line is in format Timestamp to get the datetime conversion
@@ -321,15 +323,15 @@ def procline (line , args) :
 
         if modeUTC(args.argzone) :
             # Get the time in UTC.
-            impUTCdf(linelist[0] ,  linelist , linelist[3] , args.json)
+            impUTCdf(linelist[0] ,  linelist , linelist[3] , args.json , listJson)
 
         if modeTs (args.argzone) :
             # Get the time in Timestamp.
-            impdtts(linelist[0] , linelist , linelist[3] , args.json)
+            impdtts(linelist[0] , linelist , linelist[3] , args.json , listJson)
 
         if isArgZone(args.argzone) and not modeUTC(args.argzone):
             # Get the time in Zone of args.
-            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone , args.json)
+            impZonedf(linelist[0] , linelist, linelist[3] ,  args.argzone , args.json , listJson)
 
     else :
 
@@ -339,12 +341,17 @@ def procline (line , args) :
 
 
 def readfile (args) :
+    listJson = []
     data = []
     for x in sys.stdin.readlines() :
         # Read line by line the file and get the conversion of datetimes and
         # zones.
         if x.strip() != '' :
-            procline(x.strip() , args)
+            procline(x.strip() , args , listJson)
+
+    print json.dumps(listJson , sort_keys = True , indent = 4)
+
+
 
 def main () :
     usage = "Uso %prog [opciones]"

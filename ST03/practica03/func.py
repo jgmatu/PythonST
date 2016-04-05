@@ -36,38 +36,30 @@ def getDateTime (dateformat) :
 #    minute = getMinute(dateformat[2].split(':'))
 #    second = getSecond(dateformat[2].split(':'))
 
-    dt = datetime.datetime(2013 , 6 , 19 , 15 , 9 , 25)
+    dt = datetime.datetime(2002 , 5 , 21 , 15 , 16 , 1)
     return dt
 
 
-def impdtts (numline , dateformat , zone , jsonarg) :
-    fmt = "%Y-%m-%d %H:%M:%S  %z"
+def impUTCts (numline , ts , jsonarg) :
+    fmt = "%Y-%m-%d %H:%M:%S %Z %z"
     utc = pytz.utc
 
-    #Process zone in datetime format
-    dt = getDateTime(dateformat) #Naive
-
-    timezone = getTimeZone(zone.lower())
-    dt = timezone.localize(dt) # zone
-    dt = dt.astimezone(utc) #utc
-
-    print dt
-
-    ts = matplotlib.dates.date2num(dt)
-    ts = matplotlib.dates.num2epoch(ts)
-
-
+    # Convert Timestamp in datetime
+    dt = datetime.datetime.utcfromtimestamp(ts)
+    dt = utc.localize(dt)
 
     if not jsonarg :
-        # Print datetime format Timestamp.
+        # Print default format the hour.
         printnumLine(numline)
-        print int(ts)
+        print dt.strftime(fmt)
     else :
-        # Print datetime in json format.
-        print json.dumps({numline:ts} , sort_keys=True , indent=4)
+        # Print json format the hour.
+        print json.dumps({numline:str(dt)} , sort_keys=True , indent=4)
+
+
 
 def main () :
-    impdtts(str(1) , None , "Madrid" , False)
+    impUTCts("1"  , 1436762748 , False)
 
 
 if __name__ == "__main__" :
