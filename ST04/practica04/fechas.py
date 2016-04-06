@@ -11,6 +11,8 @@ import xml.etree.cElementTree as ET
 import xmlpp
 
 
+MAXTS = 14
+
 def openfile (fileName , mode) :
     try :
         fich = open(fileName , mode)
@@ -158,7 +160,7 @@ def getTimeZone (zone) :
     return zonesdt[zones.index(zone.lower())]
 
 def impUTCdf (numline , dateformat , zone , args , listJson , root) :
-    fmt = "%Y-%m-%d %H:%M:%S %Z %z"
+    fmt = "%Y-%m-%d %H:%M:%S \t %Z %z"
     utc = pytz.utc
     atributos = {}
 
@@ -188,10 +190,9 @@ def impUTCdf (numline , dateformat , zone , args , listJson , root) :
 
 
 def impUTCts (numline , ts , args , listJson , root) :
-    fmt = "%Y-%m-%d %H:%M:%S %Z %z"
+    fmt = "%Y-%m-%d %H:%M:%S \t %Z %z"
     utc = pytz.utc
     atributos = {}
-
 
     # Convert Timestamp in datetime
     dt = datetime.datetime.utcfromtimestamp(ts)
@@ -233,11 +234,11 @@ def imptsts (numline , ts , args , listJson , root) :
 
     else :
 
+        whites = MAXTS - len(unicode(ts))
         elemento = ET.SubElement(root , u"instant")
-        atributos["date"]    = unicode(ts)
+        atributos["date"]    = unicode(ts) +  whites* ' '
         atributos["ordinal"] = numline
         elemento.attrib      = atributos
-
 
 
 def impdtts (numline , dateformat , zone , args , listJson , root) :
@@ -268,8 +269,9 @@ def impdtts (numline , dateformat , zone , args , listJson , root) :
 
     else :
 
+        whites = MAXTS - len(unicode(ts))
         elemento = ET.SubElement(root , u"instant")
-        atributos["date"]    = unicode(ts)
+        atributos["date"]    = unicode(ts) + whites * ' '
         atributos["ordinal"] = numline
         elemento.attrib      = atributos
 
@@ -380,6 +382,7 @@ def isTs (linelist) :
 def isDf (linelist) :
     return len(linelist) == 4 and isUTFformat(linelist)
 
+
 def isXmlUtc (linelist , args) :
     return (isTs(linelist) or isDf(linelist)) and modeUTC(args.zone) and \
                 isFirstLineXML(args , linelist[0])
@@ -487,6 +490,7 @@ def readfile (args) :
         # Print XML Format.
         xmlData = ET.tostring(root , encoding="utf-8" , method="xml")
         xmlpp.pprint(xmlData , sys.stdout , 4 , 80)
+
 
 def main () :
     usage = "Uso %prog [opciones]"
