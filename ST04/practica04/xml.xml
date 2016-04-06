@@ -1,5 +1,42 @@
-<papeleria>
-    <articulo descripcion="Caja 12 lápices" precio="7.54" ref="869468" />
-    <articulo descripcion="Papelera negra" precio="6.1" ref="968726" />
-    <articulo descripcion="Paquete 500 hojas A4" precio="5.4" ref="518196" />
-</papeleria>
+<instants city="UTF">
+    <instant date="2010-01-05 09:41:20 UTC +0000" ordinal="1" />
+    <instant date="2010-10-02 12:28:10 UTC +0000" ordinal="2" />
+    <instant date="2002-05-21 19:16:01 UTC +0000" ordinal="3" />
+    <instant date="2015-07-13 04:45:48 UTC +0000" ordinal="4" />
+    <instant date="2006-11-01 01:07:42 UTC +0000" ordinal="5" />
+    <instant date="2005-12-22 18:32:40 UTC +0000" ordinal="6" />
+    <instant date="2013-07-08 00:42:16 UTC +0000" ordinal="7" />
+    <instant date="2010-02-19 10:58:03 UTC +0000" ordinal="8" />
+    <instant date="2011-11-09 02:49:09 UTC +0000" ordinal="9" />
+    <instant date="2005-01-24 11:09:56 UTC +0000" ordinal="10" />
+    <instant date="2011-10-05 03:27:22 UTC +0000" ordinal="11" />
+    <instant date="2012-05-01 21:24:12 UTC +0000" ordinal="12" />
+    <instant date="2013-02-17 09:44:55 UTC +0000" ordinal="13" />
+    <instant date="2002-07-21 15:17:12 UTC +0000" ordinal="14" />
+    <instant date="2010-04-18 20:58:10 UTC +0000" ordinal="15" />
+    <instant date="2014-03-24 17:31:51 UTC +0000" ordinal="16" />
+    <instant date="2011-08-02 04:28:00 UTC +0000" ordinal="17" />
+    <instant date="2008-01-16 13:29:08 UTC +0000" ordinal="18" />
+    <instant date="2011-09-07 05:47:44 UTC +0000" ordinal="19" />
+    <instant date="2012-02-27 19:57:46 UTC +0000" ordinal="20" />
+    <instant date="2007-10-28 07:23:20 UTC +0000" ordinal="21" />
+    <instant date="2001-04-30 00:56:55 UTC +0000" ordinal="22" />
+    <instant date="2008-05-03 01:57:23 UTC +0000" ordinal="23" />
+    <instant date="2016-02-25 04:21:50 UTC +0000" ordinal="24" />
+    <instant date="2011-06-07 01:59:06 UTC +0000" ordinal="25" />
+    <instant date="2010-04-17 23:22:59 UTC +0000" ordinal="26" />
+    <instant date="2008-11-24 15:13:34 UTC +0000" ordinal="27" />
+    <instant date="2012-06-01 16:38:41 UTC +0000" ordinal="28" />
+    <instant date="2001-12-29 14:55:55 UTC +0000" ordinal="29" />
+    <instant date="2003-02-06 12:14:09 UTC +0000" ordinal="30" />
+    <instant date="2009-05-09 20:14:21 UTC +0000" ordinal="31" />
+    <instant date="2000-01-06 15:16:58 UTC +0000" ordinal="32" />
+    <instant date="2002-02-23 06:31:00 UTC +0000" ordinal="33" />
+    <instant date="2008-09-12 11:04:23 UTC +0000" ordinal="34" />
+    <instant date="2009-08-24 17:12:39 UTC +0000" ordinal="35" />
+    <instant date="2013-03-28 19:39:37 UTC +0000" ordinal="36" />
+    <instant date="2014-06-09 12:32:39 UTC +0000" ordinal="37" />
+    <instant date="2014-12-26 21:30:20 UTC +0000" ordinal="38" />
+    <instant date="2002-05-23 22:27:14 UTC +0000" ordinal="39" />
+    <instant date="2008-05-03 09:00:21 UTC +0000" ordinal="40" />
+</instants>
