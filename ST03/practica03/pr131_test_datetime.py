@@ -18,24 +18,24 @@ def compara(original , current):
     return
 
 def main():
-    ts=int(time.time())
-    original=ts
-    dt=datetime.datetime.fromtimestamp(ts)
+    ts = int(time.time())
+    original = ts
+    dt = datetime.datetime.fromtimestamp(ts)
 
     dt=madrid.localize(dt)
-    ts=calendar.timegm(dt.utctimetuple())
+    ts = calendar.timegm(dt.utctimetuple())
     compara(original , ts)  # iguales
 
-    dt=utc.normalize(dt.astimezone(utc))
-    ts=calendar.timegm(dt.utctimetuple())
+    dt = utc.normalize(dt.astimezone(utc))
+    ts = calendar.timegm(dt.utctimetuple())
     compara(original,ts)  # iguales
 
-    dt=dt.astimezone(moscu)
-    ts=calendar.timegm(dt.utctimetuple())
+    dt = dt.astimezone(moscu)
+    ts = calendar.timegm(dt.utctimetuple())
     compara(original,ts)  # iguales
 
-    dt=dt.astimezone(tokio)
-    ts=calendar.timegm(dt.utctimetuple())
+    dt = dt.astimezone(tokio)
+    ts = calendar.timegm(dt.utctimetuple())
     compara(original,ts)  # iguales
 
     return

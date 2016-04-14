@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys , os , shutil
-import calendar, datetime , pytz , time , matplotlib
+import calendar, datetime , pytz , time
 import types
 from argparse import ArgumentParser
 from matplotlib import dates
@@ -253,8 +253,7 @@ def impdtts (numline , dateformat , zone , args , listJson , root) :
     dt = timezone.localize(dt) # zone
     dt = dt.astimezone(utc) #utc
 
-    ts = matplotlib.dates.date2num(dt)
-    ts = matplotlib.dates.num2epoch(ts)
+    ts = time.mktime(dt.utctimetuple())
 
     if args.json :
 

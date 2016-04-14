@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys , os , shutil
-import calendar, datetime , pytz , time , matplotlib
+import calendar, datetime , pytz , time
 import types
 from argparse import ArgumentParser
 from matplotlib import dates
@@ -216,8 +216,7 @@ def impdtts (numline , dateformat , zone , jsonarg , listJson) :
     dt = timezone.localize(dt) # zone
     dt = dt.astimezone(utc) #utc
 
-    ts = matplotlib.dates.date2num(dt)
-    ts = matplotlib.dates.num2epoch(ts)
+    ts = time.mktime(dt.utctimetuple())
 
     if not jsonarg :
         # Print datetime format Timestamp.
@@ -349,8 +348,8 @@ def readfile (args) :
         if x.strip() != '' :
             procline(x.strip() , args , listJson)
 
-    print json.dumps(listJson , sort_keys = True , indent = 4)
-
+    if args.json :
+        print json.dumps(listJson , sort_keys = True , indent = 4)
 
 
 def main () :
@@ -367,4 +366,4 @@ def main () :
     readfile(args)
 
 if __name__ == "__main__" :
-    main()
+    main( )
