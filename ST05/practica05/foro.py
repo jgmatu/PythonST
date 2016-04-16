@@ -18,7 +18,7 @@ def getReq (url) :
 
 
 def getUsers () :
-    url = "http://jsonplaceholder.typicode.com/users"
+    url = "http://127.0.0.1:5000/users"
     data = []
     user = []
     listUsers = []
@@ -34,7 +34,7 @@ def getUsers () :
     return listUsers
 
 def getPosts () :
-    url = "http://jsonplaceholder.typicode.com/posts"
+    url = "http://127.0.0.1:5000/posts"
     data = []
 
     data = getReq(url)
