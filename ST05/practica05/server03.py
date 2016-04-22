@@ -256,11 +256,6 @@ def post3 () :
     return json.dumps(POST[2])
 
 
-@app.route('/posts')
-def post () :
-    return json.dumps(POST)
-
-
 @app.route('/users')
 def users () :
     return json.dumps(USERS)
@@ -270,12 +265,9 @@ def getUser (userId) :
     pos = 0
     while pos < len(USERS) :
 
-        print USERS[pos]["id"]
-        print userId
-
         if int(USERS[pos]["id"]) == int(userId) :
             return USERS[pos]
-        pos = pos + 1
+        pos += 1
 
     return None
 
@@ -292,21 +284,36 @@ def getResponse (user) :
     return response
 
 
-@app.route('/posts/<userId>')
-def user (userId)  :
+def isId (query_string) :
+    keys = query_string.keys()
+    return keys[0] == 'id'
+
+
+def isPar (query_string) :
+    return len(query_string) == 1 and isId(query_string)
+
+@app.route('/posts')
+def user ()  :
     query_string = flask.request.args
-    user = {}
-    response = []
 
-    user = getUser(query_string["id"])
+    if  isPar(query_string) :
+        # Get resource of one client id his posts.
+        user = {}
+        response = []
+        user = getUser(query_string["id"])
 
-    if user == None :
-        return "User Not found"
+        if user == None :
+            return "User Not found"
 
-    response = getResponse(user)
+        response = getResponse(user)
+        return json.dumps(response)
 
-    return json.dumps(response)
+    else :
+        return "Bad use of parameters in server only id User..."
 
+
+    # Default mode to get resource from REST server.
+    return json.dumps(POST)
 
 if __name__ == "__main__" :
     app.run(debug = True)

@@ -38,7 +38,6 @@ def getPosts () :
     data = []
 
     data = getReq(url)
-
     for x in range(len(data)) :
         data[x]["userId"]
         data[x]["title"]
@@ -95,7 +94,6 @@ def userOpt (listUsers , posts , user) :
 
 
 def usersPosts (listUsers , posts , args) :
-
 
     if args.user == None :
         userDef(listUsers , posts)
